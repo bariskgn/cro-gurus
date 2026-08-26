@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin="crossorigin" />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=gambarino@400&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fdfbf8; color: #2c2420; font-family: 'Satoshi', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #2c2420; text-decoration: none; }
+  a:hover { color: rgba(44,36,32,.6); }
+  em { font-family: 'Gambarino', Georgia, serif; font-style: normal; letter-spacing: -0.02em; }
+  button, select { font-family: 'Satoshi', system-ui, sans-serif; }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="position:relative;min-height:100vh;background:#fdfbf8;overflow:hidden">
+
+  <div data-screen-label="Page behind drawer" style="max-width:1440px;margin:0 auto;filter:saturate(.9)">
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;background:#2c2420;color:#fdfbf8;padding:11px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.02em;text-transform:uppercase">
+      <span style="width:6px;height:6px;border-radius:999px;background:#3db85c;box-shadow:0 0 0 3px rgba(61,184,92,0.15)"></span>
+      <span>Launch collection — free Swiss delivery over CHF 100</span>
+    </div>
+    <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px clamp(20px,5vw,80px);border-bottom:1px solid rgba(44,36,32,.08)">
+      <a href="index.html" style="font-family:'Inter',sans-serif;font-weight:500;font-size:19px;letter-spacing:0.14em;text-transform:uppercase">RYŪMA</a>
+      <nav style="display:flex;align-items:center;gap:28px;font-size:15px">
+        <div style="position:relative" onMouseEnter="{{ openShopMenu }}" onMouseLeave="{{ closeShopMenu }}">
+          <a href="collection.html" style="display:inline-flex;align-items:center;gap:6px">Shop <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(44,36,32,.4)">▾</span></a>
+          <sc-if value="{{ shopOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:100%;left:-16px;padding-top:14px;width:230px;z-index:20">
+              <div style="display:flex;flex-direction:column;padding:10px;border-radius:20px;background:#ffffff;border:1px solid rgba(44,36,32,.08);box-shadow:0 8px 56px 0 rgba(20,18,16,0.07)">
+                <a href="collection.html" style="padding:11px 14px;border-radius:12px;font-size:15px" style-hover="background:rgba(44,36,32,.04)">Shop all</a>
+                <a href="collection.html" style="padding:11px 14px;border-radius:12px;font-size:15px" style-hover="background:rgba(44,36,32,.04)">T-Shirts</a>
+                <a href="collection.html" style="padding:11px 14px;border-radius:12px;font-size:15px" style-hover="background:rgba(44,36,32,.04)">Hoodies &amp; Sweatshirts</a>
+                <a href="collection.html" style="padding:11px 14px;border-radius:12px;font-size:15px" style-hover="background:rgba(44,36,32,.04)">Launch Collection</a>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <a href="index.html#designs">The Designs</a>
+        <a href="index.html#story">Our Story</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:8px">
+        <a href="#search" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;color:rgba(44,36,32,.75)" style-hover="background:rgba(44,36,32,.06)" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M16.5 16.5 21 21"></path></svg>
+        </a>
+        <a href="#account" style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;color:rgba(44,36,32,.75)" style-hover="background:rgba(44,36,32,.06)" aria-label="Account">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.75"></circle><path d="M4.75 20c1.2-3.6 4-5.25 7.25-5.25S18.05 16.4 19.25 20"></path></svg>
+        </a>
+        <button type="button" onClick="{{ openDrawer }}" style="display:flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(44,36,32,.08);background:transparent;font-size:14px;color:#2c2420;cursor:pointer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 7.5h14l-1.2 12H6.2L5 7.5Z"></path><path d="M9 7.5V6a3 3 0 0 1 6 0v1.5"></path></svg>
+          <span style="white-space:nowrap">Cart ({{ count }})</span>
+        </button>
+      </div>
+    </header>
+    <div style="padding:clamp(28px,4vw,48px) clamp(20px,5vw,80px)">
+      <h1 style="margin:0 0 28px;font-family:'Inter',sans-serif;font-weight:500;font-size:clamp(26px,3vw,40px);letter-spacing:-0.01em">The <em>Launch Collection</em></h1>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:16px">
+        <div style="position:relative;width:100%;aspect-ratio:4/5"><image-slot id="cd-bg1" shape="rounded" radius="20" placeholder="Bushidō T-Shirt"></image-slot></div>
+        <div style="position:relative;width:100%;aspect-ratio:4/5"><image-slot id="cd-bg2" shape="rounded" radius="20" placeholder="Ryū Spirit Hoodie"></image-slot></div>
+        <div style="position:relative;width:100%;aspect-ratio:4/5"><image-slot id="cd-bg3" shape="rounded" radius="20" placeholder="Kaze T-Shirt"></image-slot></div>
+        <div style="position:relative;width:100%;aspect-ratio:4/5"><image-slot id="cd-bg4" shape="rounded" radius="20" placeholder="Ryūma Cap"></image-slot></div>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ true }}">
+  <div style="position:fixed;inset:0;z-index:70;display:flex;justify-content:flex-end;background:rgba(44,36,32,.35);backdrop-filter:blur(4px)">
+    <aside data-screen-label="Cart drawer" style="display:flex;flex-direction:column;width:min(100%,460px);height:100%;background:#fdfbf8;border-left:1px solid rgba(44,36,32,.08);box-shadow:0 8px 56px 0 rgba(20,18,16,0.07)">
+
+      <div data-screen-label="Drawer header" style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px clamp(18px,3vw,28px);border-bottom:1px solid rgba(44,36,32,.08)">
+        <div style="display:flex;align-items:baseline;gap:10px">
+          <h2 style="margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:20px;letter-spacing:-0.01em">Your cart</h2>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.02em;text-transform:uppercase;color:rgba(44,36,32,.4)">{{ countLabel }}</span>
+        </div>
+        <button type="button" onClick="{{ closeDrawer }}" aria-label="Close cart" style="width:44px;height:44px;border-radius:999px;border:1px solid rgba(44,36,32,.08);background:rgba(44,36,32,.04);font-size:15px;color:#2c2420;cursor:pointer">✕</button>
+      </div>
+
+      <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1 1 auto;min-height:180px;overflow-y:auto">
+
+        <div data-screen-label="Shipping progress" style="padding:18px clamp(18px,3vw,28px);border-bottom:1px solid rgba(44,36,32,.08)">
+          <div style="font-size:14px;line-height:1.45;margin-bottom:10px">{{ shippingMessage }}</div>
+          <div style="height:4px;border-radius:999px;background:rgba(44,36,32,.08);overflow:hidden">
+            <div style="{{ progressStyle }}"></div>
+          </div>
+        </div>
+
+        <div data-screen-label="Line items" style="display:flex;flex-direction:column">
+          <sc-for list="{{ items }}" as="item" hint-placeholder-count="2">
+            <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;padding:20px clamp(18px,3vw,28px);border-bottom:1px solid rgba(44,36,32,.08)">
+              <a href="product.html" style="position:relative;width:88px;aspect-ratio:4/5;display:block">
+                <image-slot id="{{ item.slot }}" shape="rounded" radius="14" placeholder="{{ item.name }}"></image-slot>
+              </a>
+              <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+                <div style="display:flex;justify-content:space-between;gap:12px">
+                  <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+                    <a href="product.html" style="font-size:15px">{{ item.name }}</a>
+                    <span style="font-size:13px;color:rgba(44,36,32,.4)">{{ item.variant }}</span>
+                  </div>
+                  <span style="font-size:15px;white-space:nowrap">{{ item.lineTotal }}</span>
+                </div>
+                <sc-if value="{{ item.note }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:13px;line-height:1.4;color:#2c2420;background:rgba(248,234,81,.35);border-radius:10px;padding:7px 10px">{{ item.note }}</span>
+                </sc-if>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                  <div style="display:flex;align-items:center;gap:2px;height:44px;padding:0 4px;border-radius:999px;border:1px solid rgba(44,36,32,.16)">
+                    <button type="button" onClick="{{ item.dec }}" aria-label="Decrease quantity" style="width:36px;height:36px;border-radius:999px;border:none;background:none;font-size:17px;color:#2c2420;cursor:pointer">−</button>
+                    <span style="min-width:20px;text-align:center;font-size:14px">{{ item.qty }}</span>
+                    <button type="button" onClick="{{ item.inc }}" aria-label="Increase quantity" style="width:36px;height:36px;border-radius:999px;border:none;background:none;font-size:17px;color:#2c2420;cursor:pointer">+</button>
+                  </div>
+                  <button type="button" onClick="{{ item.remove }}" style="border:none;background:none;padding:0;font-size:14px;color:rgba(44,36,32,.4);border-bottom:1px solid rgba(44,36,32,.16);cursor:pointer">Remove</button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ showRec }}" hint-placeholder-val="{{ true }}">
+          <div data-screen-label="Recommendation" style="display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:center;padding:20px clamp(18px,3vw,28px);border-bottom:1px solid rgba(44,36,32,.08)">
+            <div style="position:relative;width:72px;aspect-ratio:1/1"><image-slot id="cd-rec" shape="rounded" radius="14" placeholder="Ryūma Cap"></image-slot></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.02em;text-transform:uppercase;color:rgba(44,36,32,.4)">Goes with this</span>
+              <div style="display:flex;justify-content:space-between;gap:12px;font-size:15px"><span>Ryūma Cap · one size</span><span>CHF 45</span></div>
+              <button type="button" onClick="{{ addRec }}" style="align-self:flex-start;height:40px;padding:0 18px;border-radius:999px;border:1px solid rgba(44,36,32,.16);background:transparent;font-size:14px;color:#2c2420;cursor:pointer">Add</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <div data-screen-label="Reassurance" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;padding:18px clamp(18px,3vw,28px);font-size:13px">
+          <a href="#shipping" style="color:rgba(44,36,32,.75)">Shipping</a>
+          <a href="#returns" style="color:rgba(44,36,32,.75)">Returns</a>
+          <a href="#contact" style="color:rgba(44,36,32,.75)">Contact</a>
+          <button type="button" onClick="{{ closeDrawer }}" style="border:none;background:none;padding:0;font-size:13px;color:rgba(44,36,32,.75);border-bottom:1px solid rgba(44,36,32,.16);cursor:pointer">Continue shopping</button>
+        </div>
+      </div>
+
+      <div data-screen-label="Checkout block" style="border-top:1px solid rgba(44,36,32,.08);padding:20px clamp(18px,3vw,28px) clamp(18px,3vw,24px);background:#fdfbf8">
+        <div style="display:flex;justify-content:space-between;gap:12px;font-size:17px;margin-bottom:6px">
+          <span>Subtotal</span>
+          <span style="font-family:'Gambarino',serif;font-size:22px;letter-spacing:-0.02em">{{ subtotal }}</span>
+        </div>
+        <p style="margin:0 0 16px;font-size:13px;line-height:1.45;color:rgba(44,36,32,.4)">Incl. Swiss VAT. Shipping calculated at checkout — EU orders ship with duties included.</p>
+        <button type="button" style="width:100%;height:56px;border-radius:999px;border:none;background:#2c2420;color:#fdfbf8;font-size:16px;font-weight:500;cursor:pointer;transition:transform 150ms cubic-bezier(0.22,1,0.36,1)" style-hover="transform:translateY(-1px)">Checkout · {{ subtotal }}</button>
+        <button type="button" style="width:100%;height:48px;margin-top:10px;border-radius:999px;border:1px solid rgba(44,36,32,.16);background:transparent;font-size:15px;color:rgba(44,36,32,.75);cursor:pointer">TWINT · Apple Pay · Shop Pay</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Empty cart" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px;padding:clamp(24px,4vw,40px)">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <h3 style="margin:0;font-family:'Inter',sans-serif;font-weight:500;font-size:24px;letter-spacing:-0.01em">Your cart is empty</h3>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:rgba(44,36,32,.75)">Six pieces in the launch collection. Three original designs, two silhouettes and a cap.</p>
+        </div>
+        <a href="collection.html" style="display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;background:#2c2420;color:#fdfbf8;font-size:15px;font-weight:500" style-hover="color:#fdfbf8;transform:translateY(-1px)">Shop the Collection</a>
+        <div style="display:flex;gap:8px">
+          <a href="collection.html" style="flex:1;display:inline-flex;align-items:center;justify-content:center;height:44px;border-radius:999px;border:1px solid rgba(44,36,32,.16);font-size:14px">T-Shirts</a>
+          <a href="collection.html" style="flex:1;display:inline-flex;align-items:center;justify-content:center;height:44px;border-radius:999px;border:1px solid rgba(44,36,32,.16);font-size:14px">Hoodies</a>
+        </div>
+        <div style="display:grid;grid-template-columns:88px 1fr;gap:16px;align-items:center;margin-top:8px;padding-top:20px;border-top:1px solid rgba(44,36,32,.08)">
+          <div style="position:relative;width:88px;aspect-ratio:4/5"><image-slot id="cd-empty-feat" shape="rounded" radius="14" placeholder="Bushidō T-Shirt"></image-slot></div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.02em;text-transform:uppercase;color:rgba(44,36,32,.4)">Most worn</span>
+            <a href="product.html" style="font-size:15px">Bushidō T-Shirt</a>
+            <span style="font-size:14px;color:rgba(44,36,32,.4)">CHF 69</span>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+    </aside>
+  </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showRecommendation&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Drawer&quot;}}">
+class Component extends DCLogic {
+  state = {
+    open: true,
+    shopOpen: false,
+    lines: [
+      { id: "tee", name: "Bushidō T-Shirt", variant: "Black · M", price: 69, qty: 1, slot: "cd-l1" },
+      { id: "hoodie", name: "Ryū Spirit Hoodie", variant: "Sand · L", price: 79, qty: 1, slot: "cd-l2" }
+    ]
+  };
+  money(n) { return "CHF " + n; }
+  renderVals() {
+    const lines = this.state.lines;
+    const subtotal = lines.reduce((t, l) => t + l.price * l.qty, 0);
+    const count = lines.reduce((t, l) => t + l.qty, 0);
+    const threshold = 100;
+    const away = threshold - subtotal;
+    const setQty = (id, d) => () => this.setState((s) => ({
+      lines: s.lines.map((l) => l.id === id ? Object.assign({}, l, { qty: Math.max(1, Math.min(5, l.qty + d)) }) : l)
+    }));
+    return {
+      shopOpen: this.state.shopOpen,
+      openShopMenu: () => this.setState({ shopOpen: true }),
+      closeShopMenu: () => this.setState({ shopOpen: false }),
+      drawerOpen: this.state.open,
+      openDrawer: () => this.setState({ open: true }),
+      closeDrawer: () => this.setState({ open: false }),
+      hasItems: lines.length > 0,
+      isEmpty: lines.length === 0,
+      count: count,
+      countLabel: count === 1 ? "1 item" : count + " items",
+      subtotal: this.money(subtotal),
+      showRec: (this.props.showRecommendation ?? true) && lines.length > 0 && !lines.some((l) => l.id === "cap"),
+      shippingMessage: away > 0
+        ? "You are " + this.money(away) + " away from complimentary Swiss shipping."
+        : "You have unlocked complimentary Swiss shipping.",
+      progressStyle: "height:100%;border-radius:999px;background:" + (away > 0 ? "#2c2420" : "#3db85c")
+        + ";width:" + Math.min(100, Math.round((subtotal / threshold) * 100)) + "%;transition:width 400ms cubic-bezier(0.22,1,0.36,1)",
+      addRec: () => this.setState((s) => ({
+        lines: s.lines.concat([{ id: "cap", name: "Ryūma Cap", variant: "Black · one size", price: 45, qty: 1, slot: "cd-l3" }])
+      })),
+      items: lines.map((l) => Object.assign({}, l, {
+        lineTotal: this.money(l.price * l.qty),
+        note: l.note || false,
+        inc: setQty(l.id, 1),
+        dec: setQty(l.id, -1),
+        remove: () => this.setState((s) => ({ lines: s.lines.filter((x) => x.id !== l.id) }))
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
