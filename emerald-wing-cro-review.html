@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emerald Wing — CRO Review &amp; Recommended Experience</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --wing-page: #08111d;
+      --wing-panel: #111c2c;
+      --wing-panel-2: #172438;
+      --wing-panel-3: #1d2b40;
+      --wing-border: #34445b;
+      --wing-text: #f5f8fc;
+      --wing-muted: #aeb9c9;
+      --wing-green: #5ad576;
+      --wing-green-dark: #2e984a;
+      --wing-green-soft: rgba(90, 213, 118, .12);
+      --wing-amber: #f6b34d;
+      --wing-amber-soft: rgba(246, 179, 77, .12);
+      --wing-red: #f06e78;
+      --wing-red-soft: rgba(240, 110, 120, .12);
+      --wing-blue: #7aaaff;
+      --wing-blue-soft: rgba(122, 170, 255, .12);
+      --wing-purple: #b68cff;
+      --wing-shadow: 0 24px 75px rgba(0, 0, 0, .28);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(90, 213, 118, .08), transparent 28rem),
+        radial-gradient(circle at 92% 8%, rgba(122, 170, 255, .07), transparent 32rem),
+        var(--wing-page);
+      color: var(--wing-text);
+    }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button { cursor: default; }
+
+    .wing-shell { max-width: 1480px; margin: 0 auto; padding: 0 28px 90px; }
+    .wing-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin: 0 -28px;
+      padding: 14px 28px;
+      background: rgba(8, 17, 29, .9);
+      border-bottom: 1px solid rgba(52, 68, 91, .65);
+      backdrop-filter: blur(18px);
+    }
+    .wing-brand { display: flex; align-items: center; gap: 10px; font-weight: 850; }
+    .wing-gem { width: 23px; height: 17px; background: var(--wing-green); clip-path: polygon(15% 0, 85% 0, 100% 35%, 50% 100%, 0 35%); }
+    .wing-nav { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none; }
+    .wing-nav a { padding: 8px 10px; border-radius: 8px; color: var(--wing-muted); text-decoration: none; white-space: nowrap; font-size: 12px; }
+    .wing-nav a:hover, .wing-nav a:focus-visible { background: var(--wing-panel-2); color: var(--wing-text); outline: none; }
+
+    .wing-hero { padding: 74px 0 46px; max-width: 1040px; }
+    .wing-eyebrow { color: var(--wing-green); text-transform: uppercase; letter-spacing: .13em; font-size: 12px; font-weight: 850; }
+    h1 { margin: 15px 0 18px; font-size: clamp(40px, 6vw, 72px); line-height: 1.02; letter-spacing: -.045em; }
+    .wing-hero > p { margin: 0; max-width: 870px; color: var(--wing-muted); font-size: clamp(17px, 2vw, 21px); line-height: 1.55; }
+    .wing-chips { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .wing-chip { padding: 8px 11px; border: 1px solid var(--wing-border); border-radius: 999px; color: var(--wing-muted); background: rgba(17, 28, 44, .76); font-size: 12px; }
+
+    .wing-summary {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      margin-bottom: 86px;
+    }
+    .wing-summary-main, .wing-summary-side { padding: 24px; border: 1px solid var(--wing-border); border-radius: 18px; background: rgba(17, 28, 44, .76); box-shadow: var(--wing-shadow); }
+    .wing-summary h2 { margin: 0 0 10px; font-size: 25px; letter-spacing: -.025em; }
+    .wing-summary p { color: var(--wing-muted); line-height: 1.6; margin: 0; }
+    .wing-key-point { margin-top: 17px; padding: 13px 14px; border-left: 3px solid var(--wing-green); background: var(--wing-green-soft); color: #dff9e5; line-height: 1.5; font-size: 14px; }
+    .wing-summary-list { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+    .wing-summary-list li { display: grid; grid-template-columns: 28px 1fr; gap: 9px; align-items: start; color: var(--wing-muted); font-size: 13px; line-height: 1.45; }
+    .wing-summary-list strong { color: var(--wing-text); display: block; margin-bottom: 2px; }
+    .wing-number { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 8px; background: var(--wing-green-soft); color: var(--wing-green); font-weight: 850; }
+
+    .wing-section { scroll-margin-top: 100px; margin-bottom: 104px; }
+    .wing-section-head { display: grid; grid-template-columns: 62px 1fr; gap: 17px; align-items: start; margin-bottom: 28px; }
+    .wing-section-index { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 15px; background: var(--wing-green-soft); border: 1px solid rgba(90, 213, 118, .34); color: var(--wing-green); font-size: 18px; font-weight: 900; }
+    .wing-section-head h2 { margin: 0 0 7px; font-size: 29px; letter-spacing: -.03em; }
+    .wing-section-head p { margin: 0; color: var(--wing-muted); line-height: 1.55; }
+
+    .wing-flow-panel { padding: 23px; background: rgba(17, 28, 44, .72); border: 1px solid var(--wing-border); border-radius: 18px; box-shadow: var(--wing-shadow); }
+    .wing-flow-lane { display: grid; grid-template-columns: 100px 1fr; gap: 15px; align-items: start; padding: 15px 0; border-bottom: 1px solid rgba(52, 68, 91, .75); }
+    .wing-flow-lane:last-child { border-bottom: 0; }
+    .wing-lane-label { padding-top: 7px; color: var(--wing-text); font-weight: 850; }
+    .wing-lane-label.host { color: var(--wing-green); }
+    .wing-lane-label.watch { color: var(--wing-blue); }
+    .wing-lane-label.convert { color: var(--wing-purple); }
+    .wing-flow-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+    .wing-flow-step { padding: 8px 10px; border: 1px solid var(--wing-border); border-radius: 9px; background: var(--wing-panel-2); color: var(--wing-muted); font-size: 11px; }
+    .wing-flow-arrow { color: #66768d; font-size: 11px; }
+    .wing-risk { border-color: rgba(246, 179, 77, .5); color: #ffdaa2; background: var(--wing-amber-soft); }
+    .wing-paywall { border-color: rgba(240, 110, 120, .45); color: #ffcbd0; background: var(--wing-red-soft); }
+
+    .wing-experience-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .wing-experience { padding: 24px; border: 1px solid var(--wing-border); border-radius: 18px; background: var(--wing-panel); box-shadow: var(--wing-shadow); }
+    .wing-experience-top { display: flex; justify-content: space-between; gap: 14px; align-items: start; margin-bottom: 20px; }
+    .wing-experience h3 { margin: 0 0 5px; font-size: 23px; }
+    .wing-experience-top p { margin: 0; color: var(--wing-muted); font-size: 13px; line-height: 1.5; }
+    .wing-role { padding: 6px 9px; border-radius: 999px; background: var(--wing-green-soft); color: var(--wing-green); font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .wing-role.viewer { background: var(--wing-blue-soft); color: var(--wing-blue); }
+    .wing-review-row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 13px 0; border-top: 1px solid rgba(52, 68, 91, .76); }
+    .wing-review-label { font-size: 12px; font-weight: 850; color: var(--wing-text); }
+    .wing-review-copy { color: var(--wing-muted); font-size: 12px; line-height: 1.55; }
+    .wing-review-copy strong { color: #ffd89f; }
+
+    .wing-actions { display: grid; gap: 17px; }
+    .wing-ideas { display: grid; }
+    .wing-idea { display: grid; gap: 28px; scroll-margin-top: 100px; }
+    .wing-idea > .wing-action:nth-of-type(1) { order: 1; }
+    .wing-idea > .wing-wireframe-pair:nth-of-type(1) { order: 2; }
+    .wing-idea > .wing-action:nth-of-type(2) { order: 3; }
+    .wing-idea > .wing-wireframe-pair:nth-of-type(2) { order: 4; }
+    .wing-idea > .wing-action:nth-of-type(3) { order: 5; }
+    .wing-idea > .wing-wireframe-pair:nth-of-type(3) { order: 6; }
+    .wing-idea > .wing-action:nth-of-type(4) { order: 7; }
+    .wing-idea > .wing-wireframe-pair:nth-of-type(4) { order: 8; }
+    .wing-idea > .wing-action:nth-of-type(5) { order: 9; }
+    .wing-idea > .wing-wireframe-pair:nth-of-type(5) { order: 10; }
+    .wing-idea > .wing-wireframe-pair { margin-bottom: 68px; }
+    .wing-idea > .wing-wireframe-pair:nth-of-type(5) { margin-bottom: 0; }
+    .wing-action {
+      display: grid;
+      grid-template-columns: 76px 1.25fr 1fr 145px;
+      gap: 18px;
+      align-items: start;
+      padding: 22px;
+      border: 1px solid var(--wing-border);
+      border-radius: 16px;
+      background: var(--wing-panel);
+    }
+    .wing-action-priority { display: grid; gap: 7px; }
+    .wing-action-num { font-size: 27px; font-weight: 900; color: var(--wing-green); }
+    .wing-priority { width: max-content; padding: 5px 7px; border-radius: 7px; background: var(--wing-red-soft); color: #ffc8cd; font-size: 10px; font-weight: 850; }
+    .wing-priority.p1 { background: var(--wing-amber-soft); color: #ffdaa2; }
+    .wing-action h3 { margin: 0 0 7px; font-size: 18px; }
+    .wing-action p { margin: 0; color: var(--wing-muted); font-size: 12px; line-height: 1.55; }
+    .wing-action ul { margin: 0; padding-left: 18px; color: var(--wing-muted); font-size: 12px; line-height: 1.58; }
+    .wing-measure { display: grid; gap: 9px; }
+    .wing-measure-item { padding: 9px; border-radius: 9px; background: var(--wing-panel-2); border: 1px solid var(--wing-border); font-size: 10px; color: var(--wing-muted); line-height: 1.4; }
+    .wing-measure-item strong { display: block; color: var(--wing-text); margin-bottom: 2px; }
+
+    .wing-proposed { display: grid; gap: 14px; }
+    .wing-proposed-lane { display: grid; grid-template-columns: 155px 1fr; gap: 17px; padding: 18px; border-radius: 14px; border: 1px solid var(--wing-border); background: rgba(17, 28, 44, .72); }
+    .wing-proposed-label { font-weight: 850; color: var(--wing-text); }
+    .wing-proposed-label span { display: block; color: var(--wing-muted); font-weight: 500; font-size: 11px; margin-top: 3px; }
+    .wing-proposed .wing-flow-step { border-color: rgba(90, 213, 118, .35); color: #def8e4; }
+    .wing-proposed-note { margin-top: 18px; padding: 15px; border-left: 3px solid var(--wing-blue); background: var(--wing-blue-soft); color: #d9e6ff; font-size: 13px; line-height: 1.55; }
+
+    .wing-wireframe-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; margin-bottom: 70px; }
+    .wing-wireframe-pair:last-child { margin-bottom: 0; }
+    .wing-state { min-width: 0; display: flex; flex-direction: column; }
+    .wing-state-label { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 10px; font-size: 12px; font-weight: 850; text-transform: uppercase; letter-spacing: .09em; }
+    .wing-state.before .wing-state-label { color: var(--wing-amber); }
+    .wing-state.after .wing-state-label { color: var(--wing-green); }
+    .wing-tag { padding: 5px 8px; border-radius: 999px; border: 1px solid var(--wing-border); color: var(--wing-muted); text-transform: none; letter-spacing: 0; font-size: 10px; }
+    .wing-window { min-height: 500px; overflow: hidden; border: 1px solid var(--wing-border); border-radius: 16px; background: #101a29; box-shadow: var(--wing-shadow); }
+    .wing-state.before .wing-window { box-shadow: inset 0 3px 0 var(--wing-amber), var(--wing-shadow); }
+    .wing-state.after .wing-window { box-shadow: inset 0 3px 0 var(--wing-green), var(--wing-shadow); }
+    .wing-browserbar { display: flex; align-items: center; gap: 6px; padding: 11px 14px; border-bottom: 1px solid #2e3c51; background: #0d1623; }
+    .wing-dot { width: 8px; height: 8px; border-radius: 50%; background: #516178; }
+    .wing-address { flex: 1; height: 24px; margin-left: 8px; padding: 0 9px; border-radius: 6px; background: #19263a; color: #8291a7; font-size: 9px; display: flex; align-items: center; }
+    .wing-product-nav { min-height: 54px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 19px; border-bottom: 1px solid #2e3c51; }
+    .wing-mini-brand { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 850; }
+    .wing-mini-gem { width: 17px; height: 12px; background: var(--wing-green); clip-path: polygon(15% 0, 85% 0, 100% 35%, 50% 100%, 0 35%); }
+    .wing-mini-nav { display: flex; gap: 13px; color: #9eabba; font-size: 9px; }
+    .wing-mock { padding: 23px; }
+    .wing-mock h3 { margin: 0; font-size: 22px; letter-spacing: -.025em; }
+    .wing-mock p { margin: 8px 0 17px; color: #aab5c5; font-size: 11px; line-height: 1.55; }
+    .wing-demo { display: inline-flex; padding: 4px 7px; border-radius: 6px; color: #ffe099; background: var(--wing-amber-soft); border: 1px solid rgba(246, 179, 77, .35); font-size: 9px; }
+    #ideas .wing-wireframe-pair:first-of-type .wing-state.after .wing-mock::before {
+      content: "◆  Patented technology";
+      display: inline-flex;
+      margin-bottom: 11px;
+      padding: 5px 8px;
+      border: 1px solid rgba(90, 213, 118, .42);
+      border-radius: 999px;
+      background: var(--wing-green-soft);
+      color: #bff3ca;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .wing-patent-guidance { margin: -8px 0 24px 69px; padding: 14px 16px; border-left: 3px solid var(--wing-green); background: var(--wing-green-soft); color: #dff9e5; font-size: 13px; line-height: 1.55; }
+    .wing-option-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .wing-option { padding: 16px; border: 1px solid #394960; border-radius: 10px; background: #172438; }
+    .wing-option-icon { width: 36px; height: 36px; display: grid; place-items: center; margin-bottom: 10px; border-radius: 10px; background: #26364d; color: var(--wing-green); font-weight: 850; }
+    .wing-option h4 { margin: 0 0 5px; font-size: 13px; }
+    .wing-option p { margin: 0 0 12px; color: #95a3b6; font-size: 9px; line-height: 1.45; }
+    .wing-primary, .wing-secondary, .wing-ghost, .wing-danger {
+      min-height: 38px;
+      padding: 0 13px;
+      border-radius: 7px;
+      border: 1px solid transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 850;
+    }
+    .wing-primary { background: var(--wing-green-dark); color: white; }
+    .wing-secondary { background: #1b293d; color: #e6ebf3; border-color: #44536a; }
+    .wing-ghost { background: transparent; color: #b6c1d0; border-color: #3d4c62; }
+    .wing-danger { background: #9f3f48; color: white; }
+    .wing-full { width: 100%; }
+    .wing-button-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .wing-helper { color: #8f9db1; font-size: 9px; line-height: 1.45; }
+    .wing-good-helper { color: #ccefd4; font-size: 9px; line-height: 1.45; }
+
+    .wing-setup { display: grid; grid-template-columns: 1.05fr .95fr; gap: 15px; }
+    .wing-preview { min-height: 230px; position: relative; display: grid; place-items: center; overflow: hidden; border: 1px solid #3b4b62; border-radius: 11px; background: linear-gradient(145deg, #2c3c54, #111b2b); }
+    .wing-person { width: 80px; height: 80px; border-radius: 50%; background: #41526a; position: relative; }
+    .wing-person::after { content: ""; position: absolute; width: 125px; height: 65px; left: -23px; top: 72px; border-radius: 70px 70px 12px 12px; background: #35475f; }
+    .wing-preview-badge { position: absolute; top: 11px; left: 11px; padding: 5px 7px; border-radius: 999px; background: rgba(12, 22, 35, .85); border: 1px solid #48586e; color: #c5cedb; font-size: 8px; }
+    .wing-control-dots { position: absolute; bottom: 11px; display: flex; gap: 7px; }
+    .wing-circle { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: #223149; border: 1px solid #536278; font-size: 9px; }
+    .wing-fields { display: grid; gap: 9px; }
+    .wing-field { min-height: 38px; padding: 0 10px; border: 1px solid #3c4c63; border-radius: 7px; background: #1d2a3f; color: #b7c1cf; font-size: 9px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .wing-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 5px; color: #e5eaf2; font-size: 9px; }
+    .wing-choice-list { display: grid; gap: 8px; }
+    .wing-choice { display: grid; grid-template-columns: 18px 1fr; gap: 9px; padding: 10px; border: 1px solid #3b4b61; border-radius: 8px; background: #172438; color: #d9e0ea; font-size: 10px; line-height: 1.4; }
+    .wing-choice.selected { border-color: var(--wing-green); background: var(--wing-green-soft); }
+    .wing-radio { width: 16px; height: 16px; border-radius: 50%; border: 1px solid #617086; }
+    .wing-choice.selected .wing-radio { border: 5px solid var(--wing-green); }
+    .wing-consent { display: grid; grid-template-columns: 16px 1fr; gap: 8px; padding: 10px; border: 1px solid rgba(90, 213, 118, .36); background: var(--wing-green-soft); border-radius: 8px; color: #daf5e0; font-size: 9px; line-height: 1.45; }
+    .wing-checkbox { width: 16px; height: 16px; border: 1px solid var(--wing-green); border-radius: 4px; }
+
+    .wing-search { min-height: 430px; display: grid; place-items: center; padding: 24px; }
+    .wing-search-card { width: min(100%, 380px); text-align: center; }
+    .wing-search-orbit { width: 110px; height: 110px; margin: 0 auto 17px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(90, 213, 118, .55); box-shadow: 0 0 0 18px rgba(90, 213, 118, .06), 0 0 0 36px rgba(90, 213, 118, .03); }
+    .wing-search-card h4 { margin: 0 0 7px; font-size: 18px; }
+    .wing-search-card p { margin: 0 0 14px; color: #9daabc; font-size: 10px; line-height: 1.5; }
+    .wing-status-row { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 15px; }
+    .wing-status { padding: 5px 7px; border-radius: 999px; border: 1px solid #3b4a60; color: #aeb9c8; font-size: 8px; }
+
+    .wing-lobby { padding: 20px; }
+    .wing-lobby-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 13px; }
+    .wing-lobby-head h3 { margin: 0; font-size: 18px; }
+    .wing-session-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .wing-session { min-height: 123px; padding: 11px; border: 1px solid #394960; border-radius: 9px; background: #172438; }
+    .wing-session.locked { opacity: .58; }
+    .wing-avatars { display: flex; margin-bottom: 9px; }
+    .wing-avatar { width: 31px; height: 31px; border-radius: 50%; background: #3a4b63; border: 2px solid #172438; }
+    .wing-avatar + .wing-avatar { margin-left: -7px; }
+    .wing-session strong { display: block; font-size: 9px; margin-bottom: 4px; }
+    .wing-session span { color: #91a0b4; font-size: 8px; }
+    .wing-lock { margin-top: 8px; color: #ffd498 !important; display: block; }
+    .wing-paywall-banner { margin-top: 13px; padding: 12px; border-radius: 9px; background: var(--wing-red-soft); border: 1px solid rgba(240, 110, 120, .4); color: #ffcbd0; text-align: center; font-size: 9px; line-height: 1.45; }
+    .wing-live-label { color: #ff7c85 !important; }
+
+    .wing-room { min-height: 450px; display: grid; grid-template-columns: 1.25fr .75fr; }
+    .wing-stage { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 7px; padding: 13px; background: #0d1724; border-right: 1px solid #2f3e53; }
+    .wing-video-tile { display: grid; place-items: center; border-radius: 10px; background: linear-gradient(145deg, #31445b, #1b293c); border: 1px solid #405168; position: relative; }
+    .wing-video-avatar { width: 67px; height: 67px; border-radius: 50%; background: #4b5e76; }
+    .wing-name { position: absolute; bottom: 8px; left: 8px; padding: 4px 6px; border-radius: 6px; background: rgba(9, 17, 29, .82); font-size: 8px; }
+    .wing-room-top { position: absolute; top: 12px; left: 12px; right: 12px; z-index: 2; display: flex; justify-content: space-between; gap: 8px; pointer-events: none; }
+    .wing-live { padding: 5px 7px; border-radius: 999px; background: rgba(68, 22, 27, .92); color: #ffb4ba; border: 1px solid rgba(240, 110, 120, .5); font-size: 8px; }
+    .wing-viewers { padding: 5px 7px; border-radius: 999px; background: rgba(10, 20, 33, .9); border: 1px solid #45546a; color: #c4cedc; font-size: 8px; }
+    .wing-room-controls { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; gap: 6px; z-index: 2; }
+    .wing-room-chat { padding: 15px; display: flex; flex-direction: column; background: #121d2d; }
+    .wing-room-chat h4 { margin: 0 0 5px; font-size: 14px; }
+    .wing-room-chat > p { margin: 0 0 12px; color: #8f9db0; font-size: 8px; }
+    .wing-message-list { display: grid; gap: 7px; margin-bottom: auto; }
+    .wing-message { padding: 8px; border-radius: 7px; background: #1a283c; color: #c8d1dd; font-size: 8px; line-height: 1.4; }
+    .wing-message strong { color: var(--wing-green); }
+    .wing-chat-actions { display: grid; gap: 7px; margin-top: 13px; }
+
+    .wing-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin-top: 18px; }
+    .wing-note { padding: 10px; border: 1px solid var(--wing-border); border-radius: 9px; background: rgba(17, 28, 44, .74); color: var(--wing-muted); font-size: 10px; line-height: 1.45; }
+    .wing-note strong { display: block; margin-bottom: 3px; color: var(--wing-text); }
+    .wing-state.before .wing-note strong { color: #ffd69e; }
+    .wing-state.after .wing-note strong { color: #cef4d6; }
+
+    .wing-questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .wing-question-group { padding: 21px; border: 1px solid var(--wing-border); border-radius: 15px; background: var(--wing-panel); }
+    .wing-question-group h3 { margin: 0 0 12px; font-size: 17px; }
+    .wing-question-group ol { margin: 0; padding-left: 20px; color: var(--wing-muted); font-size: 12px; line-height: 1.58; }
+    .wing-question-group li + li { margin-top: 7px; }
+
+    .wing-measurement { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .wing-measurement-panel { padding: 21px; border: 1px solid var(--wing-border); border-radius: 15px; background: var(--wing-panel); }
+    .wing-measurement-panel h3 { margin: 0 0 12px; font-size: 17px; }
+    .wing-event-flow { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+    .wing-event { padding: 7px 8px; border-radius: 8px; background: var(--wing-panel-2); border: 1px solid rgba(90, 213, 118, .3); color: #d8f3de; font-size: 9px; }
+    .wing-outcome-list { margin: 0; padding-left: 18px; color: var(--wing-muted); font-size: 12px; line-height: 1.6; }
+    .wing-outcome-list li + li { margin-top: 6px; }
+    .wing-footer { margin-top: 18px; padding-top: 24px; border-top: 1px solid var(--wing-border); color: var(--wing-muted); font-size: 12px; line-height: 1.6; }
+
+    @media (max-width: 1080px) {
+      .wing-action { grid-template-columns: 68px 1fr 1fr; }
+      .wing-measure { grid-column: 2 / -1; grid-template-columns: repeat(3, 1fr); }
+      .wing-wireframe-pair { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 850px) {
+      .wing-summary, .wing-experience-grid, .wing-measurement, .wing-questions { grid-template-columns: 1fr; }
+      .wing-action { grid-template-columns: 58px 1fr; }
+      .wing-action > ul { grid-column: 2; }
+      .wing-measure { grid-column: 2; grid-template-columns: 1fr; }
+      .wing-proposed-lane { grid-template-columns: 1fr; gap: 9px; }
+      .wing-nav { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      .wing-shell { padding: 0 14px 65px; }
+      .wing-topbar { margin: 0 -14px; padding: 12px 14px; }
+      .wing-hero { padding-top: 50px; }
+      .wing-section-head { grid-template-columns: 47px 1fr; gap: 11px; }
+      .wing-section-index { width: 42px; height: 42px; border-radius: 12px; font-size: 15px; }
+      .wing-flow-lane, .wing-review-row { grid-template-columns: 1fr; gap: 5px; }
+      .wing-action { grid-template-columns: 1fr; }
+      .wing-action > ul, .wing-measure { grid-column: 1; }
+      .wing-action-priority { display: flex; align-items: center; justify-content: space-between; }
+      .wing-option-grid, .wing-setup, .wing-button-row { grid-template-columns: 1fr; }
+      .wing-session-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .wing-room { grid-template-columns: 1fr; }
+      .wing-stage { min-height: 280px; border-right: 0; border-bottom: 1px solid #2f3e53; }
+      .wing-room-chat { min-height: 250px; }
+      .wing-notes { grid-template-columns: 1fr; }
+      .wing-window { min-height: 0; }
+      .wing-patent-guidance { margin: 0 0 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wing-shell">
+    <header class="wing-topbar">
+      <div class="wing-brand"><span class="wing-gem"></span> Emerald Wing CRO</div>
+      <nav class="wing-nav" aria-label="Review sections">
+        <a href="#current">Current flow</a>
+        <a href="#review">Host &amp; Watch</a>
+        <a href="#flows">Proposed flows</a>
+        <a href="#ideas">5 ideas + wireframes</a>
+        <a href="#questions">Team questions</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="wing-hero">
+        <div class="wing-eyebrow">Emerald Wing experience review</div>
+        <h1>Make going live understandable, intentional, and worth completing.</h1>
+        <p>The current feature contains a compelling two-host live-room concept, but its entry copy suggests a simpler friend-invite call. The proposal below clarifies the product, protects user intent through signup, and removes friction from hosting and watching.</p>
+        <div class="wing-chips">
+          <span class="wing-chip">Reviewed: Host + Watch + video conversion</span>
+          <span class="wing-chip">Primary activation: live room successfully started</span>
+          <span class="wing-chip">Quality: viewer joins + meaningful interaction</span>
+          <span class="wing-chip">Current status: Demo</span>
+        </div>
+      </section>
+
+      <section class="wing-summary">
+        <div class="wing-summary-main">
+          <h2>Core diagnosis</h2>
+          <p>Emerald Wing is functionally a <strong>two-host live video session with spectators and shared chat</strong>. Users can enter a host queue, watch public rooms, invite friends, or convert an existing 1-on-1 video match after both people agree.</p>
+          <div class="wing-key-point">The main conversion problem is expectation mismatch: “Invite friends to join your video chat” sounds like a group call, while the default Host path actually searches for a random co-host and the Watch path is Premium-gated.</div>
+        </div>
+        <aside class="wing-summary-side">
+          <ul class="wing-summary-list">
+            <li><span class="wing-number">1</span><div><strong>Clarify the product</strong>Use one name and explain hosts, viewers, visibility, and Premium rules.</div></li>
+            <li><span class="wing-number">2</span><div><strong>Ask intent first</strong>Current partner, invited friend, or random co-host are different jobs.</div></li>
+            <li><span class="wing-number">3</span><div><strong>Prime permissions</strong>Do not request camera and microphone immediately on page load.</div></li>
+            <li><span class="wing-number">4</span><div><strong>Create viewer value</strong>Show the lobby before presenting the subscription decision.</div></li>
+            <li><span class="wing-number">5</span><div><strong>Support first interaction</strong>Make sharing, chat, reporting, and next-room actions obvious.</div></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="wing-section" id="current">
+        <div class="wing-section-head"><div class="wing-section-index">01</div><div><h2>Current experience and entry points</h2><p>Three routes feed the same live-room system, but they set different expectations and apply different visibility decisions.</p></div></div>
+        <div class="wing-flow-panel">
+          <div class="wing-flow-lane"><div class="wing-lane-label host">Host</div><div class="wing-flow-steps"><span class="wing-flow-step">Meet page</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step wing-risk">Emerald Wing · Demo</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Host</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step wing-risk">Immediate camera + mic request</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Device + Public/Private</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Join Wing Queue</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step wing-risk">Random co-host match</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Live room</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Invite friends</span></div></div>
+          <div class="wing-flow-lane"><div class="wing-lane-label watch">Watch</div><div class="wing-flow-steps"><span class="wing-flow-step">Meet page</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Emerald Wing</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Watch a Session</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Live session grid</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step wing-paywall">Premium gate</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Watch + chat</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Gift / switch room</span></div></div>
+          <div class="wing-flow-lane"><div class="wing-lane-label convert">Convert</div><div class="wing-flow-steps"><span class="wing-flow-step">1-on-1 video match</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">One user requests Wing Mode</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Both approve</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step wing-risk">Redirect to host room</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step wing-risk">Appears public by default</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Viewers join</span></div></div>
+        </div>
+      </section>
+
+      <section class="wing-section" id="review">
+        <div class="wing-section-head"><div class="wing-section-index">02</div><div><h2>Structured review of both experiences</h2><p>Host and Watch solve different user needs and should have separate value propositions, activation metrics, and recovery paths.</p></div></div>
+        <div class="wing-experience-grid">
+          <article class="wing-experience">
+            <div class="wing-experience-top"><div><h3>Host experience</h3><p>Create a two-host live room and invite viewers.</p></div><span class="wing-role">Broadcaster</span></div>
+            <div class="wing-review-row"><div class="wing-review-label">Discoverability</div><div class="wing-review-copy">Available as a fourth card on the Meet page and as “Wing Mode” inside a video chat. The “Demo” label and inconsistent Wing/Wingman naming reduce confidence.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Purpose</div><div class="wing-review-copy"><strong>Unclear.</strong> Entry copy promises friend invitations, but Host sends the user into a random co-host queue.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Setup</div><div class="wing-review-copy">Camera and microphone are requested on page load. Users then select devices and visibility; Public is the default.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Interaction</div><div class="wing-review-copy">After matching, hosts can stream, chat, mute, pause video, change devices, invite Emerald friends, and view participant count.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Conversion risk</div><div class="wing-review-copy">Permission denial, unexpected random matching, unknown queue time, unclear public exposure, and no obvious alternative if no co-host is found.</div></div>
+          </article>
+
+          <article class="wing-experience">
+            <div class="wing-experience-top"><div><h3>Watch experience</h3><p>Browse and join active two-host live sessions.</p></div><span class="wing-role viewer">Viewer</span></div>
+            <div class="wing-review-row"><div class="wing-review-label">Discoverability</div><div class="wing-review-copy">Hidden behind Meet → Emerald Wing → Watch a Session. Premium restrictions are not disclosed at the entry card.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Purpose</div><div class="wing-review-copy">The lobby is understandable once reached: host avatars, names, participant count, and a Random option.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Access</div><div class="wing-review-copy"><strong>High-friction paywall.</strong> Sessions and Random are locked for users without a Premium Badge.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Interaction</div><div class="wing-review-copy">Viewers receive video/audio, use shared text chat, switch rooms, leave, and send a $5.99 gift worth +150 karma.</div></div>
+            <div class="wing-review-row"><div class="wing-review-label">Conversion risk</div><div class="wing-review-copy">Users see little proof of room quality before the paywall; viewer count may include hosts, and gifts appear before the product establishes engagement.</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="wing-section" id="flows">
+        <div class="wing-section-head"><div class="wing-section-index">03</div><div><h2>Proposed user flows</h2><p>Each flow preserves the original intent and delays secondary decisions until they become relevant.</p></div></div>
+        <div class="wing-proposed">
+          <div class="wing-proposed-lane"><div class="wing-proposed-label">New Host<span>Random or invited co-host</span></div><div class="wing-flow-steps"><span class="wing-flow-step">Wing value page</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Choose co-host source</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Choose Public or Invite-only</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Permission primer</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Device preview</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Find / invite co-host</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Room ready check</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Go live</span></div></div>
+          <div class="wing-proposed-lane"><div class="wing-proposed-label">Convert current match<span>Both users already present</span></div><div class="wing-flow-steps"><span class="wing-flow-step">Request Wing</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Explain live audience</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Both confirm visibility</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Device readiness</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Invite / share</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Go live</span></div></div>
+          <div class="wing-proposed-lane"><div class="wing-proposed-label">Viewer<span>Browse before buying</span></div><div class="wing-flow-steps"><span class="wing-flow-step">Live rooms preview</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Choose room</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Free sample or Premium explanation</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Join receive-only</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Welcome prompt</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Chat / react / follow</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Switch or leave</span></div></div>
+          <div class="wing-proposed-lane"><div class="wing-proposed-label">Signed-out deep link<span>Signup continuity</span></div><div class="wing-flow-steps"><span class="wing-flow-step">Wing campaign or invite</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">“Continue to Emerald Wing” signup</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">18+ confirmation</span><span class="wing-flow-arrow">→</span><span class="wing-flow-step">Return to intended room or setup</span></div></div>
+        </div>
+        <div class="wing-proposed-note"><strong>Signup recommendation:</strong> do not insert Emerald Wing into the generic signup path for every visitor. Preserve Wing intent only for users arriving from a Wing card, invite, converted match, or campaign; otherwise optimize first-time users for Emerald’s core 1-on-1 activation.</div>
+      </section>
+
+      <section class="wing-section" id="ideas">
+        <div class="wing-section-head"><div class="wing-section-index">04</div><div><h2>Five CRO ideas, explained and visualized</h2><p>Each recommendation is explained immediately before its corresponding before-and-after wireframe so the rationale and interface change can be reviewed together.</p></div></div>
+        <div class="wing-ideas">
+        <div class="wing-idea">
+          <article class="wing-action"><div class="wing-action-priority"><span class="wing-action-num">01</span><span class="wing-priority">P0</span></div><div><h3>Clarify the promise, patented differentiation, and naming</h3><p><strong>Problem:</strong> “Invite friends to join your video chat” sounds like a normal group call, while Wing is actually a two-host live room with an audience. Users cannot predict what Host or Watch will do, and the patented nature of the experience is not used as supporting proof.</p><p style="margin-top:8px"><strong>Recommendation:</strong> Define the product in one sentence—“two hosts, one live room, shared audience chat”—use Emerald Wing consistently, and add a restrained “Patented technology” trust signal beside the first clear product explanation.</p></div><ul><li>Explain host, co-host, and viewer roles.</li><li>Add patent proof near the entry-page value proposition.</li><li>Disclose matching and Premium requirements.</li><li>Keep the value proposition—not the patent—as the headline.</li></ul><div class="wing-measure"><div class="wing-measure-item"><strong>Why it should work</strong>Clarity drives comprehension; patent proof adds credibility and differentiation.</div><div class="wing-measure-item"><strong>Primary metric</strong>Wing option selected / entry viewed</div><div class="wing-measure-item"><strong>Impact · effort</strong>High · Low</div></div></article>
+
+          <article class="wing-action"><div class="wing-action-priority"><span class="wing-action-num">02</span><span class="wing-priority">P0</span></div><div><h3>Ask session intent and visibility before permissions</h3><p><strong>Problem:</strong> The Host path moves directly into device setup, leaves random matching implicit, and preselects Public. A commitment decision, privacy decision, and browser permission request are combined into one high-friction step.</p><p style="margin-top:8px"><strong>Recommendation:</strong> First ask how the co-host will join and who may discover the room. Request camera and microphone access only after those decisions are explicit.</p></div><ul><li>Offer current partner, friend, or random co-host.</li><li>Require Public or Invite-only selection.</li><li>Never preselect Public.</li><li>Preserve the choice through signup/login.</li></ul><div class="wing-measure"><div class="wing-measure-item"><strong>Why it should work</strong>Intent-first setup improves trust and prevents accidental public broadcasting.</div><div class="wing-measure-item"><strong>Primary metric</strong>Setup completed / setup started</div><div class="wing-measure-item"><strong>Impact · effort</strong>High + safety · Medium</div></div></article>
+
+          <article class="wing-action"><div class="wing-action-priority"><span class="wing-action-num">03</span><span class="wing-priority">P0</span></div><div><h3>Add a permission primer, device preview, and queue recovery</h3><p><strong>Problem:</strong> Camera and microphone prompts arrive without context, while the queue provides no wait estimate or useful recovery path. Users can deny access, lose confidence, or abandon while searching.</p><p style="margin-top:8px"><strong>Recommendation:</strong> Explain why each permission is needed, confirm devices in a preview, and turn the queue into an informative state with alternatives.</p></div><ul><li>Trigger permissions from a clear user action.</li><li>Test camera and microphone separately.</li><li>Show estimated matching time and visibility.</li><li>Offer friend invite, edit setup, and cancel.</li></ul><div class="wing-measure"><div class="wing-measure-item"><strong>Why it should work</strong>Context lifts permission acceptance; recovery options rescue stalled sessions.</div><div class="wing-measure-item"><strong>Primary metric</strong>Live room started / Host selected</div><div class="wing-measure-item"><strong>Impact · effort</strong>High · Medium–High</div></div></article>
+
+          <article class="wing-action"><div class="wing-action-priority"><span class="wing-action-num">04</span><span class="wing-priority p1">P1</span></div><div><h3>Let viewers understand the lobby before the paywall</h3><p><strong>Problem:</strong> Non-Premium users meet a hard access gate before seeing enough evidence that a room is relevant or entertaining. Generic cards and ambiguous participant counts cannot justify the purchase.</p><p style="margin-top:8px"><strong>Recommendation:</strong> Surface room topics, hosts, real viewer counts, and access rules. Test a short muted preview or one featured free room before asking for Premium.</p></div><ul><li>Show active-room count at the Wing entry.</li><li>Add title, host names, and viewer count.</li><li>Provide a bounded free preview.</li><li>Explain exactly what Premium unlocks.</li></ul><div class="wing-measure"><div class="wing-measure-item"><strong>Why it should work</strong>Content proof makes the upgrade decision concrete instead of speculative.</div><div class="wing-measure-item"><strong>Primary metric</strong>Watch started / lobby viewed</div><div class="wing-measure-item"><strong>Impact · effort</strong>Medium–High · Medium</div></div></article>
+
+          <article class="wing-action"><div class="wing-action-priority"><span class="wing-action-num">05</span><span class="wing-priority p1">P1</span></div><div><h3>Design the live room around participation and sharing</h3><p><strong>Problem:</strong> Role labels and audience counts are ambiguous, the invite promise is incomplete, and the gift CTA competes with first participation. The room exposes controls without giving users a clear social next step.</p><p style="margin-top:8px"><strong>Recommendation:</strong> Separate host and viewer roles, make the invite link functional, prompt the first interaction, and present monetization after engagement begins.</p></div><ul><li>Provide Copy link and Invite friends.</li><li>Separate Hosts and Viewers in the count.</li><li>Add a topic and pinned welcome prompt.</li><li>Keep report/block available; delay gifts.</li></ul><div class="wing-measure"><div class="wing-measure-item"><strong>Why it should work</strong>Clear roles and prompts shorten time to first meaningful interaction.</div><div class="wing-measure-item"><strong>Primary metric</strong>Meaningful interaction / watch started</div><div class="wing-measure-item"><strong>Impact · effort</strong>Medium · Medium</div></div></article>
+
+        <div class="wing-wireframe-pair">
+          <article class="wing-state before"><div class="wing-state-label">Before · Entry <span class="wing-tag">Vague Demo</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">/app/meet</div></div><div class="wing-product-nav"><div class="wing-mini-brand"><i class="wing-mini-gem"></i> Emerald</div><div class="wing-mini-nav"><span>Dashboard</span><span>Meet</span><span>Profile</span></div></div><div class="wing-mock"><span class="wing-demo">Demo</span><h3 style="margin-top:9px">Emerald Wing</h3><p>Invite friends to join your video chat.</p><div class="wing-option-grid"><div class="wing-option"><div class="wing-option-icon">●</div><h4>Host</h4><p>Start a Wing session and invite others to join you.</p><div class="wing-primary">Start</div></div><div class="wing-option"><div class="wing-option-icon">◉</div><h4>Watch a Session</h4><p>Browse active Wing sessions.</p><div class="wing-secondary">Browse</div></div></div></div></div><div class="wing-notes"><div class="wing-note"><strong>Promise mismatch</strong>Sounds like a normal friend video call.</div><div class="wing-note"><strong>Unknown roles</strong>Two-host broadcasting is not explained.</div><div class="wing-note"><strong>Hidden access rule</strong>Premium viewing appears later.</div></div></article>
+
+          <article class="wing-state after"><div class="wing-state-label">After · Entry <span class="wing-tag">Clear live-room model</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">/app/meet/wing</div></div><div class="wing-product-nav"><div class="wing-mini-brand"><i class="wing-mini-gem"></i> Emerald Wing</div><div class="wing-mini-nav"><span>How it works</span><span>Safety</span><span>My invites</span></div></div><div class="wing-mock"><div class="wing-eyebrow" style="font-size:9px">Two hosts · Live viewers · Shared chat</div><h3 style="margin-top:8px">Host a conversation or join the audience</h3><p>Two hosts go live together. Viewers can watch, chat, and participate. You control who can discover your room.</p><div class="wing-option-grid"><div class="wing-option" style="border-color:rgba(90,213,118,.55)"><div class="wing-option-icon">LIVE</div><h4>Start a live room</h4><p>Continue with your partner, invite a friend, or find a co-host.</p><div class="wing-primary">Set up a room</div></div><div class="wing-option"><div class="wing-option-icon" style="color:var(--wing-blue)">12</div><h4>Watch live rooms</h4><p>12 rooms are live now. Premium viewing; preview available.</p><div class="wing-secondary">Explore rooms</div></div></div><p class="wing-helper" style="margin-top:12px">18+ · Live sessions are moderated · Public rooms appear in the lobby</p></div></div><div class="wing-notes"><div class="wing-note"><strong>Clear value</strong>Hosts, audience, and chat are explicit.</div><div class="wing-note"><strong>Choice by job</strong>Host and Watch have distinct outcomes.</div><div class="wing-note"><strong>Rules upfront</strong>Visibility and Premium are disclosed.</div></div></article>
+        </div>
+
+        <div class="wing-wireframe-pair">
+          <article class="wing-state before"><div class="wing-state-label">Before · Host setup <span class="wing-tag">Permission first</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">/app/meet/wing/host</div></div><div class="wing-mock"><h3>Host Emerald Wing</h3><p>Camera and microphone access is requested as soon as this page loads.</p><div class="wing-setup"><div class="wing-preview"><span class="wing-preview-badge">Browser permission required</span><div class="wing-person"></div></div><div class="wing-fields"><div><div class="wing-label"><span>Camera</span></div><div class="wing-field">FaceTime HD <span>⌄</span></div></div><div><div class="wing-label"><span>Microphone</span></div><div class="wing-field">MacBook mic <span>⌄</span></div></div><div><div class="wing-label"><span>Privacy</span></div><div class="wing-field">Public <span>⌄</span></div></div><p class="wing-helper">By joining as a host, you consent to let others view your video.</p><div class="wing-primary">Join Wing Queue</div></div></div></div></div><div class="wing-notes"><div class="wing-note"><strong>No intent choice</strong>Random matching is discovered after setup.</div><div class="wing-note"><strong>Risky default</strong>Public is preselected.</div><div class="wing-note"><strong>Low permission trust</strong>The browser prompt lacks a primer.</div></div></article>
+
+          <article class="wing-state after"><div class="wing-state-label">After · Host setup <span class="wing-tag">Intent + consent first</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">Set up your live room · Step 1 of 2</div></div><div class="wing-mock"><h3>Who will host with you?</h3><p>Choose how the second host joins. You can invite viewers after both hosts are ready.</p><div class="wing-choice-list"><div class="wing-choice selected"><i class="wing-radio"></i><div><strong>Continue with my current partner</strong><div class="wing-helper">Available when converting an active video chat.</div></div></div><div class="wing-choice"><i class="wing-radio"></i><div><strong>Invite an Emerald friend</strong><div class="wing-helper">Choose a friend before going live.</div></div></div><div class="wing-choice"><i class="wing-radio"></i><div><strong>Find a random co-host</strong><div class="wing-helper">Estimated match time: under 45 seconds.</div></div></div></div><div style="margin-top:14px"><div class="wing-label"><span>Who can discover the room?</span><span>Required</span></div><div class="wing-button-row"><div class="wing-secondary">Public lobby</div><div class="wing-secondary">Invite-only</div></div></div><div class="wing-consent" style="margin-top:12px"><i class="wing-checkbox"></i><span>Both hosts must confirm the audience and visibility before the room goes live.</span></div><div class="wing-primary wing-full" style="margin-top:12px">Continue to camera setup</div></div></div><div class="wing-notes"><div class="wing-note"><strong>Job selected</strong>No surprise random co-host.</div><div class="wing-note"><strong>Visibility explicit</strong>Nothing is public by default.</div><div class="wing-note"><strong>Permission delayed</strong>Camera is requested only after intent.</div></div></article>
+        </div>
+
+        <div class="wing-wireframe-pair">
+          <article class="wing-state before"><div class="wing-state-label">Before · Queue <span class="wing-tag">Unknown wait</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">Wing Queue</div></div><div class="wing-search"><div class="wing-search-card"><div class="wing-search-orbit"><i class="wing-mini-gem" style="width:29px;height:21px"></i></div><h4>Searching for a partner</h4><p>No wait estimate, co-host criteria, or alternative action is shown.</p><div class="wing-danger wing-full">STOP</div></div></div></div><div class="wing-notes"><div class="wing-note"><strong>Uncertain duration</strong>No expected queue time.</div><div class="wing-note"><strong>Thin recovery</strong>Only Stop is available.</div><div class="wing-note"><strong>Context lost</strong>Visibility and setup choices disappear.</div></div></article>
+
+          <article class="wing-state after"><div class="wing-state-label">After · Queue <span class="wing-tag">Progress + alternatives</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">Finding your co-host</div></div><div class="wing-search"><div class="wing-search-card"><div class="wing-search-orbit"><i class="wing-mini-gem" style="width:29px;height:21px"></i></div><h4>Finding a co-host…</h4><p>Most matches start in 20–45 seconds. Your camera remains visible only to you until both hosts are ready.</p><div class="wing-status-row"><span class="wing-status">Public lobby</span><span class="wing-status">Camera ready</span><span class="wing-status">Mic ready</span></div><div class="wing-primary wing-full">Invite a friend instead</div><div class="wing-button-row" style="margin-top:8px"><div class="wing-ghost">Edit setup</div><div class="wing-danger">Cancel search</div></div><p class="wing-good-helper" style="margin-top:11px">When matched, both hosts review the room before going live.</p></div></div></div><div class="wing-notes"><div class="wing-note"><strong>Expectation set</strong>Estimated range reduces abandonment.</div><div class="wing-note"><strong>Alternative path</strong>Friend invite can rescue the session.</div><div class="wing-note"><strong>Safer transition</strong>Matching does not instantly broadcast.</div></div></article>
+        </div>
+
+        <div class="wing-wireframe-pair">
+          <article class="wing-state before"><div class="wing-state-label">Before · Watch lobby <span class="wing-tag">Locked before value</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">/app/meet/wing/lobbies</div></div><div class="wing-lobby"><div class="wing-lobby-head"><h3>Live Wing Sessions</h3><span class="wing-demo">Premium only</span></div><div class="wing-session-grid"><div class="wing-session locked"><div class="wing-avatars"><i class="wing-avatar"></i><i class="wing-avatar"></i></div><strong>Hosts hidden</strong><span>◉ 8 participants</span><span class="wing-lock">♛ Premium Only</span></div><div class="wing-session locked"><div class="wing-avatars"><i class="wing-avatar"></i><i class="wing-avatar"></i></div><strong>Hosts hidden</strong><span>◉ 5 participants</span><span class="wing-lock">♛ Premium Only</span></div><div class="wing-session locked"><div class="wing-avatars"><i class="wing-avatar"></i><i class="wing-avatar"></i></div><strong>Hosts hidden</strong><span>◉ 11 participants</span><span class="wing-lock">♛ Premium Only</span></div></div><div class="wing-paywall-banner">Acquire a Premium Badge to watch this stream.</div></div></div><div class="wing-notes"><div class="wing-note"><strong>Little proof</strong>No topic or content context.</div><div class="wing-note"><strong>Hard wall</strong>Users cannot sample the experience.</div><div class="wing-note"><strong>Ambiguous count</strong>Participants may include hosts.</div></div></article>
+
+          <article class="wing-state after"><div class="wing-state-label">After · Watch lobby <span class="wing-tag">Preview before upgrade</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">Explore Emerald Wing</div></div><div class="wing-lobby"><div class="wing-lobby-head"><div><h3>12 rooms live now</h3><span class="wing-helper">Preview a room or unlock unlimited watching.</span></div><div class="wing-secondary">Premium benefits</div></div><div class="wing-session-grid"><div class="wing-session"><span class="wing-live-label">● LIVE</span><div class="wing-avatars" style="margin-top:6px"><i class="wing-avatar"></i><i class="wing-avatar"></i></div><strong>Travel stories</strong><span>Maya + Theo · 6 viewers</span><span class="wing-good-helper" style="display:block;margin-top:7px">Free preview</span></div><div class="wing-session"><span class="wing-live-label">● LIVE</span><div class="wing-avatars" style="margin-top:6px"><i class="wing-avatar"></i><i class="wing-avatar"></i></div><strong>Photography chat</strong><span>Sam + Grace · 9 viewers</span><span class="wing-lock">Premium room</span></div><div class="wing-session"><span class="wing-live-label">● LIVE</span><div class="wing-avatars" style="margin-top:6px"><i class="wing-avatar"></i><i class="wing-avatar"></i></div><strong>Music discoveries</strong><span>Alex + Dani · 4 viewers</span><span class="wing-lock">Premium room</span></div></div><div class="wing-button-row" style="margin-top:13px"><div class="wing-primary">Preview featured room</div><div class="wing-secondary">Unlock all rooms</div></div></div></div><div class="wing-notes"><div class="wing-note"><strong>Value visible</strong>Topic, hosts, and viewer count aid selection.</div><div class="wing-note"><strong>Lower commitment</strong>A sample builds purchase confidence.</div><div class="wing-note"><strong>Honest access</strong>Premium rules are shown before room click.</div></div></article>
+        </div>
+
+        <div class="wing-wireframe-pair">
+          <article class="wing-state before"><div class="wing-state-label">Before · Live room <span class="wing-tag">Controls + monetization</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">Wing session</div></div><div class="wing-room"><div class="wing-stage"><div class="wing-room-top"><span class="wing-live">● LIVE</span><span class="wing-viewers">◉ 8</span></div><div class="wing-video-tile"><i class="wing-video-avatar"></i><span class="wing-name">Host 1</span></div><div class="wing-video-tile"><i class="wing-video-avatar"></i><span class="wing-name">Host 2</span></div><div class="wing-room-controls"><span class="wing-circle">◉</span><span class="wing-circle">▣</span><span class="wing-circle">⚙</span><span class="wing-circle">↗</span></div></div><div class="wing-room-chat"><h4>Wingman Chat</h4><p>Shared room messages</p><div class="wing-message-list"><div class="wing-message"><strong>Maya:</strong> Hi everyone!</div><div class="wing-message"><strong>Viewer:</strong> Great room</div></div><div class="wing-chat-actions"><div class="wing-field">Type a message…</div><div class="wing-primary">$5.99 Send Gift</div></div></div></div></div><div class="wing-notes"><div class="wing-note"><strong>Role confusion</strong>Host/viewer status is not strongly differentiated.</div><div class="wing-note"><strong>Broken invitation promise</strong>Modal mentions a link but shows friends only.</div><div class="wing-note"><strong>Premature gift</strong>Revenue action competes with participation.</div></div></article>
+
+          <article class="wing-state after"><div class="wing-state-label">After · Live room <span class="wing-tag">Participation + safety</span></div><div class="wing-window"><div class="wing-browserbar"><i class="wing-dot"></i><i class="wing-dot"></i><i class="wing-dot"></i><div class="wing-address">Emerald Wing · Photography chat</div></div><div class="wing-room"><div class="wing-stage"><div class="wing-room-top"><span class="wing-live">● LIVE · Public</span><span class="wing-viewers">2 hosts · 6 viewers</span></div><div class="wing-video-tile"><i class="wing-video-avatar"></i><span class="wing-name">Maya · Host</span></div><div class="wing-video-tile"><i class="wing-video-avatar"></i><span class="wing-name">Theo · Host</span></div><div class="wing-room-controls"><span class="wing-circle">Mic</span><span class="wing-circle">Cam</span><span class="wing-circle">Invite</span><span class="wing-circle">Leave</span></div></div><div class="wing-room-chat"><h4>Photography chat</h4><p>Pinned: Ask the hosts about their favorite photo destination.</p><div class="wing-message-list"><div class="wing-message"><strong>Welcome:</strong> Be respectful. Report concerns at any time.</div><div class="wing-message"><strong>Grace:</strong> Film or digital?</div></div><div class="wing-chat-actions"><div class="wing-field">Type a message… <span>Send</span></div><div class="wing-button-row"><div class="wing-secondary">Copy invite link</div><div class="wing-secondary">Invite friends</div></div><div class="wing-helper">Report · Block · Gift after 60 seconds</div></div></div></div></div><div class="wing-notes"><div class="wing-note"><strong>Roles visible</strong>Hosts and viewers are counted separately.</div><div class="wing-note"><strong>Real sharing</strong>Link and friend invitation both work.</div><div class="wing-note"><strong>Engagement first</strong>Prompts and safety precede monetization.</div></div></article>
+        </div>
+        </div>
+        </div>
+      </section>
+
+      <section class="wing-section" id="questions">
+        <div class="wing-section-head"><div class="wing-section-index">05</div><div><h2>Questions and technical considerations</h2><p>These decisions should be answered before final design because they change the information architecture, consent model, and room behavior.</p></div></div>
+        <div class="wing-patent-guidance"><strong>Patent claim check:</strong> confirm the legally approved wording, patent number, covered jurisdictions, and whether the patent protects Emerald Wing specifically or only part of its underlying technology. Link the claim to supporting patent details, and avoid implying broader protection than the granted claims provide.</div>
+        <div class="wing-questions">
+          <article class="wing-question-group"><h3>Product and monetization</h3><ol><li>Is Wing primarily a random two-host broadcast, a friend co-host experience, or both?</li><li>Should every room require exactly two hosts, or can a host begin alone?</li><li>Is Premium-only watching a fixed business rule, or can the team test previews/free rooms?</li><li>What does “Demo” communicate—limited reliability, limited access, or unfinished design?</li><li>Should Wing be marketed before a user completes their first core 1-on-1 chat?</li></ol></article>
+          <article class="wing-question-group"><h3>Privacy, consent, and safety</h3><ol><li>Are converted 1-on-1 rooms intentionally Public by default? Both hosts should explicitly confirm.</li><li>Are Public rooms indexed only in the in-product lobby, or accessible through shared links?</li><li>How do invite-only permissions work for non-Premium friends?</li><li>What live moderation, reporting, blocking, recording, and evidence-retention systems apply?</li><li>What happens when one host withdraws consent or leaves?</li></ol></article>
+          <article class="wing-question-group"><h3>Room and interaction model</h3><ol><li>Does the eye count include hosts? Define Hosts, Viewers, and Total participants separately.</li><li>Should viewers be text-only, or are reactions, requests to join, and following planned?</li><li>Is screen sharing intended? The underlying room logic contains support but the current host UI does not clearly expose it.</li><li>Can hosts set a title/topic before going live?</li><li>What is the maximum number of hosts and viewers per LiveKit room?</li></ol></article>
+          <article class="wing-question-group"><h3>Signup, routing, and reliability</h3><ol><li>Can signup/login preserve Host, Watch, room ID, invite token, and converted-match intent?</li><li>What happens when a verification link opens on another device?</li><li>Can camera and microphone permission be requested separately and retried without reload?</li><li>What is the fallback when no co-host or room is available?</li><li>How are friend invitations delivered, expired, accepted, and measured?</li></ol></article>
+        </div>
+      </section>
+
+      <section class="wing-section">
+        <div class="wing-section-head"><div class="wing-section-index">06</div><div><h2>Measurement and expected outcome</h2><p>Instrument Host and Watch as separate funnels and optimize for meaningful live participation rather than entry-card clicks.</p></div></div>
+        <div class="wing-measurement">
+          <article class="wing-measurement-panel"><h3>Recommended event funnel</h3><div class="wing-event-flow"><span class="wing-event">wing_entry_viewed</span><span class="wing-flow-arrow">→</span><span class="wing-event">wing_role_selected</span><span class="wing-flow-arrow">→</span><span class="wing-event">visibility_confirmed</span><span class="wing-flow-arrow">→</span><span class="wing-event">permission_result</span><span class="wing-flow-arrow">→</span><span class="wing-event">cohost_found</span><span class="wing-flow-arrow">→</span><span class="wing-event">room_live</span><span class="wing-flow-arrow">→</span><span class="wing-event">viewer_joined</span><span class="wing-flow-arrow">→</span><span class="wing-event">meaningful_interaction</span></div><p class="wing-helper" style="margin-top:14px">Also record signup method, deep-link intent, co-host source, visibility, permission outcome, queue duration, Premium status, room ID, host/viewer role, and exit reason.</p></article>
+          <article class="wing-measurement-panel"><h3>Expected directional outcomes</h3><ul class="wing-outcome-list"><li>Higher understanding of Emerald Wing before users choose Host or Watch.</li><li>Higher camera/microphone grant rate through pre-permission context.</li><li>More completed live rooms through co-host choice and queue recovery.</li><li>Higher Watch-to-Premium intent through meaningful lobby previews.</li><li>More invites, first chat messages, and sustained viewing.</li><li>Lower accidental public-room creation and privacy-related exits.</li></ul></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wing-footer">This proposal is based on the current Emerald Wing routes and shipped interface behavior reviewed on 20 August 2026. Validate with controlled Host, Watch, converted-room, invite-only, Premium, permission-denial, and no-room test cases before final design or development.</footer>
+  </div>
+  <script>
+    const ideaStack = document.querySelector('.wing-idea');
+    if (ideaStack) {
+      const explanations = [...ideaStack.querySelectorAll(':scope > .wing-action')];
+      const comparisons = [...ideaStack.querySelectorAll(':scope > .wing-wireframe-pair')];
+      explanations.forEach((explanation, index) => {
+        ideaStack.append(explanation);
+        if (comparisons[index]) ideaStack.append(comparisons[index]);
+      });
+    }
+  </script>
+</body>
+</html>
