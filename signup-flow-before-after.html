@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emerald Chat — Signup Flow Before &amp; After</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #09111d;
+      --surface: #111b2b;
+      --surface-2: #172235;
+      --surface-3: #202c40;
+      --border: #314057;
+      --text: #f5f7fb;
+      --muted: #aeb9ca;
+      --green: #56ce71;
+      --green-dark: #2b9348;
+      --green-soft: rgba(86, 206, 113, .13);
+      --amber: #f4ae49;
+      --amber-soft: rgba(244, 174, 73, .12);
+      --red: #f36b76;
+      --red-soft: rgba(243, 107, 118, .12);
+      --blue: #75a7ff;
+      --radius: 18px;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .28);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 8% 0%, rgba(86, 206, 113, .09), transparent 27rem),
+        radial-gradient(circle at 95% 12%, rgba(117, 167, 255, .07), transparent 30rem),
+        var(--page);
+      color: var(--text);
+    }
+
+    a { color: inherit; }
+    button, input { font: inherit; }
+
+    .page-shell { max-width: 1480px; margin: 0 auto; padding: 0 28px 80px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 0 -28px;
+      padding: 14px 28px;
+      background: rgba(9, 17, 29, .88);
+      border-bottom: 1px solid rgba(49, 64, 87, .65);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .gem { width: 22px; height: 16px; background: var(--green); clip-path: polygon(15% 0, 85% 0, 100% 35%, 50% 100%, 0 35%); }
+    .topnav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+    .topnav a { text-decoration: none; color: var(--muted); font-size: 13px; white-space: nowrap; padding: 8px 10px; border-radius: 8px; }
+    .topnav a:hover, .topnav a:focus-visible { color: var(--text); background: var(--surface-2); outline: none; }
+
+    .hero { padding: 76px 0 46px; max-width: 970px; }
+    .eyebrow { color: var(--green); text-transform: uppercase; letter-spacing: .13em; font-size: 12px; font-weight: 800; }
+    h1 { font-size: clamp(38px, 6vw, 72px); line-height: 1.02; letter-spacing: -.045em; margin: 15px 0 20px; }
+    .hero p { color: var(--muted); font-size: clamp(17px, 2vw, 22px); line-height: 1.55; max-width: 820px; margin: 0; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .pill { border: 1px solid var(--border); background: rgba(17, 27, 43, .72); color: var(--muted); padding: 8px 11px; border-radius: 999px; font-size: 13px; }
+
+    .journey { margin: 18px 0 76px; padding: 26px; background: rgba(17, 27, 43, .76); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .journey h2, .section-heading h2 { margin: 0; font-size: 27px; letter-spacing: -.025em; }
+    .journey p, .section-heading p { color: var(--muted); line-height: 1.6; margin: 8px 0 0; }
+    .journey-row { display: grid; grid-template-columns: 105px 1fr; gap: 18px; align-items: start; margin-top: 22px; }
+    .journey-label { padding-top: 8px; font-weight: 800; }
+    .journey-label.before { color: var(--amber); }
+    .journey-label.after { color: var(--green); }
+    .steps { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .step { padding: 8px 11px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface-2); color: var(--muted); font-size: 12px; }
+    .before-row .step { border-color: rgba(244, 174, 73, .35); }
+    .after-row .step { border-color: rgba(86, 206, 113, .35); color: #dff9e5; }
+    .arrow { color: #66748b; font-size: 12px; }
+
+    .recommendation-section { scroll-margin-top: 110px; margin: 0 0 112px; }
+    .section-heading { display: grid; grid-template-columns: 72px 1fr; gap: 18px; align-items: start; margin-bottom: 22px; }
+    .section-index { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--green-soft); border: 1px solid rgba(86, 206, 113, .35); color: var(--green); font-size: 20px; font-weight: 900; }
+    .comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: stretch; }
+
+    .state { min-width: 0; display: flex; flex-direction: column; }
+    .state-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 9px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .state.before .state-label { color: var(--amber); }
+    .state.after .state-label { color: var(--green); }
+    .impact { font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 700; padding: 5px 8px; border-radius: 999px; color: var(--muted); border: 1px solid var(--border); }
+
+    .browser {
+      overflow: hidden;
+      height: auto;
+      min-height: 520px;
+      background: #101927;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    .state.before .browser { box-shadow: inset 0 3px 0 rgba(244, 174, 73, .9), var(--shadow); }
+    .state.after .browser { box-shadow: inset 0 3px 0 rgba(86, 206, 113, .95), var(--shadow); }
+    .browser-bar { display: flex; align-items: center; gap: 6px; padding: 11px 14px; background: #0d1522; border-bottom: 1px solid #28364a; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #48566a; }
+    .address { flex: 1; margin-left: 8px; height: 24px; border-radius: 6px; background: #182337; color: #77869c; font-size: 10px; display: flex; align-items: center; padding: 0 9px; }
+    .product-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 55px; padding: 0 20px; border-bottom: 1px solid #29364a; background: #101927; }
+    .product-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 13px; }
+    .mini-gem { width: 18px; height: 13px; background: var(--green); clip-path: polygon(15% 0, 85% 0, 100% 35%, 50% 100%, 0 35%); }
+    .nav-links { display: flex; gap: 17px; align-items: center; color: #b5c0d0; font-size: 10px; }
+    .nav-cta { padding: 8px 12px; border-radius: 6px; background: var(--green-dark); color: white; font-weight: 800; }
+
+    .mock-body { padding: 28px; }
+    .mock-body.compact { padding: 20px; }
+    .mock-h1 { margin: 0; max-width: 540px; font-size: clamp(25px, 3.2vw, 42px); line-height: 1.08; letter-spacing: -.04em; color: var(--green); }
+    .mock-h2 { margin: 0; font-size: 22px; letter-spacing: -.025em; }
+    .mock-p { color: #b6c0cf; font-size: 12px; line-height: 1.6; margin: 12px 0 20px; }
+    .helper { color: #92a1b6; font-size: 10px; line-height: 1.45; }
+    .strong-helper { margin-top: 10px; color: #caebd1; font-size: 10px; text-align: center; }
+    .primary, .secondary, .provider, .ghost-button, .danger-button {
+      display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; border-radius: 7px; border: 1px solid transparent; padding: 0 14px; font-size: 11px; font-weight: 800; text-align: center;
+    }
+    .primary { background: var(--green-dark); color: white; }
+    .secondary { border-color: #4b5a70; color: #e8edf5; background: #192437; }
+    .ghost-button { border-color: #3a485e; color: #bac5d4; background: transparent; }
+    .danger-button { background: #a33943; color: white; }
+    .full { width: 100%; }
+    .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .text-link { color: #70dc85; font-size: 10px; text-decoration: underline; }
+    .or { color: #8f9cb0; font-size: 10px; margin: 15px 0 9px; }
+    .provider-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .provider { justify-content: flex-start; border-color: #3a485d; background: #172234; color: #dce3ed; }
+    .provider-icon { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: #2a374b; color: white; font-size: 9px; }
+    .fake-media { margin-top: 22px; height: 130px; border-radius: 14px; border: 1px solid #2f3d51; background: linear-gradient(115deg, #152237 10%, #293549 50%, #162236 80%); position: relative; overflow: hidden; }
+    .fake-media::before, .fake-media::after { content: ""; position: absolute; border-radius: 50%; filter: blur(1px); background: rgba(117, 167, 255, .18); }
+    .fake-media::before { width: 180px; height: 180px; left: 10%; top: 25%; }
+    .fake-media::after { width: 140px; height: 140px; right: 11%; top: -20%; background: rgba(86, 206, 113, .13); }
+
+    .modal-stage { min-height: 455px; display: grid; place-items: center; padding: 22px; background: radial-gradient(circle at center, #253348, #101927 68%); }
+    .modal { width: min(100%, 360px); background: #111a29; border: 1px solid #2c3a4e; border-radius: 14px; padding: 22px; box-shadow: 0 28px 80px rgba(0, 0, 0, .45); }
+    .modal-title { font-size: 19px; font-weight: 850; text-align: center; margin: 9px 0 4px; }
+    .modal-sub { color: #a6b1c2; font-size: 10px; text-align: center; line-height: 1.5; margin-bottom: 17px; }
+    .provider-stack { display: grid; gap: 8px; }
+    .provider-stack .provider { min-height: 36px; }
+    .close { text-align: center; margin-top: 16px; color: #c5cdd9; font-size: 10px; }
+    .form-group { margin: 11px 0; }
+    .form-label { display: flex; justify-content: space-between; color: #e2e7ee; font-size: 10px; margin-bottom: 6px; }
+    .field { width: 100%; min-height: 38px; border: 1px solid #3b4960; border-radius: 7px; background: #222d41; color: #7f8da1; padding: 0 11px; font-size: 10px; display: flex; align-items: center; justify-content: space-between; }
+    .field.valid { border-color: rgba(86, 206, 113, .65); color: #dce6ef; }
+    .requirement { color: #92a1b6; font-size: 9px; margin-top: 5px; }
+    .captcha { display: grid; place-items: center; height: 48px; margin: 14px auto; width: 75%; background: #edf1f5; color: #324054; font-size: 9px; border: 1px solid #bfc7d0; }
+    .terms { color: #8f9cb0; font-size: 8px; line-height: 1.5; margin: 10px 0; text-align: center; }
+    .progress { display: flex; gap: 5px; margin: 0 0 18px; }
+    .progress span { flex: 1; height: 3px; border-radius: 9px; background: #334057; }
+    .progress span.active { background: var(--green); }
+
+    .profile-layout { display: grid; gap: 16px; }
+    .choice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+    .choice { padding: 14px 8px; border: 1px solid #3a485d; background: #182337; border-radius: 9px; text-align: center; color: #d8e0eb; font-size: 10px; }
+    .choice.selected { border-color: var(--green); background: var(--green-soft); }
+    .choice-avatar { width: 34px; height: 34px; margin: 0 auto 7px; border-radius: 50%; background: #34445b; }
+    .warning { display: flex; gap: 8px; padding: 10px; border: 1px solid rgba(243, 107, 118, .42); background: var(--red-soft); border-radius: 8px; color: #ffc8cd; font-size: 9px; line-height: 1.45; }
+    .check-row { display: flex; align-items: flex-start; gap: 9px; padding: 11px; border-radius: 8px; background: var(--green-soft); border: 1px solid rgba(86, 206, 113, .36); color: #e3f8e8; font-size: 10px; line-height: 1.45; }
+    .checkbox { flex: 0 0 16px; width: 16px; height: 16px; border-radius: 4px; border: 1px solid var(--green); background: #172438; }
+
+    .dashboard { padding: 22px; }
+    .dash-title { font-size: 19px; font-weight: 850; margin-bottom: 15px; }
+    .dash-card { display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #344157; border-radius: 11px; background: #172234; margin-bottom: 10px; }
+    .dash-card h4 { margin: 0 0 5px; font-size: 13px; }
+    .dash-card p { margin: 0; color: #9facbe; font-size: 9px; }
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .mode { min-height: 90px; padding: 13px; border: 1px solid #35445a; border-radius: 10px; background: #182337; }
+    .mode h4 { margin: 0 0 5px; font-size: 12px; }
+    .mode p { margin: 0 0 10px; color: #95a3b7; font-size: 8px; line-height: 1.4; }
+    .upsell { margin-bottom: 12px; padding: 9px; border-radius: 8px; background: var(--amber-soft); border: 1px solid rgba(244, 174, 73, .35); color: #ffdcaa; font-size: 9px; }
+
+    .match-shell { display: grid; grid-template-columns: minmax(0, 1fr) 180px; min-height: 455px; }
+    .match-main { padding: 22px; }
+    .match-side { padding: 18px; border-left: 1px solid #2d3b50; background: #0f1826; }
+    .match-title { font-size: 19px; font-weight: 850; margin: 0 0 4px; }
+    .filter { padding: 11px 0; border-bottom: 1px solid #2d3a4f; }
+    .filter-head { display: flex; justify-content: space-between; align-items: center; color: #dce3ed; font-size: 10px; }
+    .toggle { width: 29px; height: 16px; border-radius: 999px; background: #35445b; position: relative; }
+    .toggle::after { content: ""; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #a4afbe; left: 2px; top: 2px; }
+    .toggle.on { background: var(--green-dark); }
+    .toggle.on::after { left: 15px; background: white; }
+    .range { height: 4px; margin: 10px 0; background: linear-gradient(90deg, var(--green) 36%, #38465b 36%); border-radius: 9px; }
+    .locked { color: var(--amber); font-size: 8px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 18px; }
+    .chip { border: 1px solid #46566d; border-radius: 999px; padding: 6px 8px; color: #b6c1d1; font-size: 9px; }
+    .chip.selected { border-color: var(--green); color: #dff8e5; background: var(--green-soft); }
+    details { border: 1px solid #35445a; border-radius: 9px; background: #151f31; padding: 11px; }
+    summary { cursor: pointer; color: #dbe3ee; font-size: 10px; font-weight: 800; }
+    .summary-note { margin: 8px 0 0; color: #8f9cb0; font-size: 9px; }
+
+    .permission-layout { display: grid; grid-template-columns: 1.05fr .95fr; gap: 14px; align-items: stretch; }
+    .video-preview { min-height: 220px; display: grid; place-items: center; border-radius: 12px; background: linear-gradient(140deg, #26354b, #111b2b); border: 1px solid #3c4a5e; position: relative; }
+    .video-person { width: 90px; height: 90px; border-radius: 50%; background: #3b4a61; position: relative; }
+    .video-person::after { content: ""; position: absolute; width: 140px; height: 70px; border-radius: 80px 80px 15px 15px; background: #33445b; top: 80px; left: -25px; }
+    .preview-controls { position: absolute; bottom: 12px; display: flex; gap: 7px; }
+    .round-control { width: 29px; height: 29px; border-radius: 50%; background: #25344a; border: 1px solid #526178; display: grid; place-items: center; font-size: 10px; }
+    .device-list { display: grid; gap: 9px; }
+    .device { display: flex; justify-content: space-between; gap: 9px; padding: 10px; border: 1px solid #35435a; border-radius: 8px; background: #182337; font-size: 9px; }
+    .device strong { display: block; margin-bottom: 3px; color: #e6ebf2; }
+    .device span { color: #8f9db0; }
+    .status-ok { color: var(--green) !important; }
+    .error-box { padding: 15px; border-radius: 10px; background: var(--red-soft); border: 1px solid rgba(243, 107, 118, .45); color: #ffcbd0; font-size: 10px; line-height: 1.55; }
+
+    .search-stage { min-height: 455px; display: grid; place-items: center; padding: 24px; }
+    .search-card { width: min(100%, 390px); text-align: center; }
+    .radar { width: 120px; height: 120px; margin: 0 auto 18px; border-radius: 50%; border: 1px solid rgba(86, 206, 113, .55); box-shadow: 0 0 0 18px rgba(86, 206, 113, .07), 0 0 0 36px rgba(86, 206, 113, .035); display: grid; place-items: center; }
+    .radar .mini-gem { width: 30px; height: 22px; }
+    .search-card h3 { margin: 0 0 8px; font-size: 20px; }
+    .search-card p { margin: 0 0 17px; color: #98a6b9; font-size: 10px; line-height: 1.5; }
+    .search-summary { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+
+    .connected { min-height: 455px; display: grid; grid-template-columns: 1.15fr .85fr; }
+    .partner-video { position: relative; display: grid; place-items: center; background: linear-gradient(145deg, #25344a, #101927 70%); border-right: 1px solid #2c394e; }
+    .partner-avatar { width: 105px; height: 105px; border-radius: 50%; background: #364960; box-shadow: 0 0 0 12px rgba(86, 206, 113, .08); }
+    .connected-badge { position: absolute; left: 15px; top: 15px; padding: 7px 9px; border-radius: 999px; background: rgba(26, 49, 35, .92); border: 1px solid rgba(86, 206, 113, .45); color: #c9f2d2; font-size: 9px; }
+    .partner-controls { position: absolute; bottom: 15px; display: flex; gap: 8px; }
+    .chat-panel { padding: 18px; display: flex; flex-direction: column; }
+    .chat-panel h3 { margin: 0 0 6px; font-size: 16px; }
+    .chat-panel p { color: #97a5b8; font-size: 9px; line-height: 1.5; margin: 0 0 14px; }
+    .icebreakers { display: grid; gap: 7px; margin-bottom: auto; }
+    .icebreaker { padding: 9px; border: 1px solid #37465c; border-radius: 8px; background: #182337; color: #c9d2df; font-size: 9px; text-align: left; }
+    .chat-actions { display: grid; gap: 8px; margin-top: 16px; }
+
+    .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 18px; }
+    .note { padding: 10px; border-radius: 9px; background: rgba(17, 27, 43, .7); border: 1px solid var(--border); color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .note strong { display: block; margin-bottom: 4px; color: var(--text); }
+    .state.before .note strong { color: #ffd69d; }
+    .state.after .note strong { color: #c9f3d2; }
+
+    .footer { margin-top: 20px; padding: 24px 0 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    @media (max-width: 980px) {
+      .comparison { grid-template-columns: 1fr; }
+      .browser { min-height: 500px; }
+      .topnav { display: none; }
+      .notes { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 650px) {
+      .page-shell { padding: 0 14px 60px; }
+      .topbar { margin: 0 -14px; padding: 12px 14px; }
+      .hero { padding-top: 50px; }
+      .journey { padding: 18px; }
+      .journey-row { grid-template-columns: 1fr; gap: 4px; }
+      .section-heading { grid-template-columns: 50px 1fr; gap: 11px; }
+      .section-index { width: 44px; height: 44px; border-radius: 13px; font-size: 16px; }
+      .mock-body { padding: 19px; }
+      .nav-links { display: none; }
+      .provider-grid, .button-row, .mode-grid, .permission-layout, .connected { grid-template-columns: 1fr; }
+      .match-shell { grid-template-columns: 1fr; }
+      .match-side { border-left: 0; border-top: 1px solid #2d3b50; }
+      .partner-video { min-height: 240px; border-right: 0; border-bottom: 1px solid #2c394e; }
+      .choice-grid { grid-template-columns: 1fr; }
+      .choice { display: flex; align-items: center; gap: 9px; text-align: left; padding: 9px; }
+      .choice-avatar { width: 28px; height: 28px; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand"><span class="gem"></span> Emerald Chat CRO</div>
+      <nav class="topnav" aria-label="Wireframe sections">
+        <a href="#homepage">Homepage</a>
+        <a href="#signup">Signup</a>
+        <a href="#profile">Age &amp; profile</a>
+        <a href="#activation">Activation</a>
+        <a href="#permissions">Permissions</a>
+        <a href="#connection">Connection</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow">Before / after wireframes</div>
+        <h1>Shorten the distance from curiosity to connection.</h1>
+        <p>Six wireframe comparisons show how to remove repeated choices, set expectations earlier, and focus the first session on one outcome: a safe, successful partner connection.</p>
+        <div class="hero-meta">
+          <span class="pill">Primary KPI: partner connected / landing session</span>
+          <span class="pill">Quality KPI: 30-second chat / landing session</span>
+          <span class="pill">Guardrails: reports, blocks, underage signals</span>
+        </div>
+      </section>
+
+      <section class="journey" aria-labelledby="journey-title">
+        <h2 id="journey-title">Journey compression</h2>
+        <p>Preserve the visitor’s video or text intent through authentication and remove screens that do not help them connect.</p>
+        <div class="journey-row before-row">
+          <div class="journey-label before">Before</div>
+          <div class="steps">
+            <span class="step">Homepage</span><span class="arrow">→</span><span class="step">Provider modal</span><span class="arrow">→</span><span class="step">Account</span><span class="arrow">→</span><span class="step">Verify</span><span class="arrow">→</span><span class="step">Gender</span><span class="arrow">→</span><span class="step">Dashboard</span><span class="arrow">→</span><span class="step">Meet</span><span class="arrow">→</span><span class="step">Mode</span><span class="arrow">→</span><span class="step">Settings</span><span class="arrow">→</span><span class="step">Permissions</span><span class="arrow">→</span><span class="step">Partner</span>
+          </div>
+        </div>
+        <div class="journey-row after-row">
+          <div class="journey-label after">After</div>
+          <div class="steps">
+            <span class="step">Choose video or text</span><span class="arrow">→</span><span class="step">Account + 18+</span><span class="arrow">→</span><span class="step">Device check</span><span class="arrow">→</span><span class="step">Simple match</span><span class="arrow">→</span><span class="step">Partner</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="homepage">
+        <div class="section-heading">
+          <div class="section-index">01</div>
+          <div><h2>Homepage: turn generic intent into a clear path</h2><p>Replace the duplicated signup architecture with two outcome-based actions and disclose the commitment before the click.</p></div>
+        </div>
+        <div class="comparison">
+          <article class="state before">
+            <div class="state-label">Before <span class="impact">Ambiguous + duplicated</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">new.emeraldchat.com</div></div>
+              <div class="product-nav"><div class="product-brand"><i class="mini-gem"></i> Emerald Chat</div><div class="nav-links"><span>Features</span><span>Safety</span><span class="nav-cta">Start Chatting</span></div></div>
+              <div class="mock-body">
+                <h3 class="mock-h1">Meet someone new on Emerald Chat</h3>
+                <p class="mock-p">Meet new people through random video chat, safely and authentically, without bots or harassment.</p>
+                <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center"><div class="primary">Start Chatting Now</div><a class="text-link">Login to your account</a></div>
+                <div class="or">Or continue with</div>
+                <div class="provider-grid">
+                  <div class="provider"><span class="provider-icon">G</span> Google</div><div class="provider"><span class="provider-icon">f</span> Facebook</div>
+                  <div class="provider"><span class="provider-icon">✉</span> Email</div><div class="provider"><span class="provider-icon">●</span> Apple</div>
+                </div>
+                <div class="fake-media"></div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Unclear promise</strong>“Start Chatting” does not explain that an account is required.</div><div class="note"><strong>Two entry systems</strong>The CTA and four provider buttons compete.</div><div class="note"><strong>Lost intent</strong>Video vs text is postponed until several screens later.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">After <span class="impact">Outcome-led + transparent</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">new.emeraldchat.com</div></div>
+              <div class="product-nav"><div class="product-brand"><i class="mini-gem"></i> Emerald Chat</div><div class="nav-links"><span>How it works</span><span>Safety</span><span>Log in</span></div></div>
+              <div class="mock-body">
+                <div class="eyebrow" style="font-size:9px">18+ · Free to start</div>
+                <h3 class="mock-h1">Meet someone real in seconds</h3>
+                <p class="mock-p">Start a moderated 1-on-1 video or text chat. Your login details stay private and are never shown to partners.</p>
+                <div class="button-row"><div class="primary">▣ &nbsp; Start free video chat</div><div class="secondary">⌨ &nbsp; Start text chat</div></div>
+                <div class="strong-helper">Create a free account in about 30 seconds · No credit card</div>
+                <div class="fake-media" style="margin-top:28px"><div style="position:absolute;left:18px;bottom:16px;display:flex;gap:7px"><span class="pill" style="font-size:9px;background:#111b2b">Active moderation</span><span class="pill" style="font-size:9px;background:#111b2b">Anti-bot protection</span></div></div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Outcome first</strong>Visitors select video or text before authentication.</div><div class="note"><strong>Expectation set</strong>18+, account time, price, and privacy are visible.</div><div class="note"><strong>Intent preserved</strong>The chosen mode determines the post-signup destination.</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="signup">
+        <div class="section-heading">
+          <div class="section-index">02</div>
+          <div><h2>Signup: create hierarchy and keep the chosen method stable</h2><p>Reduce five equal options, make temporary access explicit, and remove surprises from email signup.</p></div>
+        </div>
+        <div class="comparison">
+          <article class="state before">
+            <div class="state-label">Before <span class="impact">Five equal choices</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Signup modal</div></div>
+              <div class="modal-stage">
+                <div class="modal">
+                  <div class="product-brand" style="justify-content:center"><i class="mini-gem"></i> Emerald Chat</div>
+                  <div class="modal-title">Sign Up to Start Chatting</div>
+                  <div class="modal-sub">Choose how you'd like to continue. Signing up keeps your account and data safe.</div>
+                  <div class="provider-stack"><div class="provider"><span class="provider-icon">G</span> Continue with Google</div><div class="provider"><span class="provider-icon">●</span> Continue with Apple</div><div class="provider"><span class="provider-icon">f</span> Continue with Facebook</div><div class="provider"><span class="provider-icon">✉</span> Continue with Email</div><div class="provider"><span class="provider-icon">•••</span> Other</div></div>
+                  <div class="close">Close</div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Choice overload</strong>All providers have equal visual weight.</div><div class="note"><strong>Hidden trial</strong>“Other” conceals temporary access.</div><div class="note"><strong>Extra step</strong>This repeats the homepage choices.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">After <span class="impact">Ranked + recoverable</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Video chat · Step 1 of 3</div></div>
+              <div class="modal-stage">
+                <div class="modal">
+                  <div class="progress"><span class="active"></span><span></span><span></span></div>
+                  <div class="modal-title">Continue to video chat</div>
+                  <div class="modal-sub">Choose a secure way to save your account. We’ll return you to video matching.</div>
+                  <div class="provider-stack"><div class="primary"><span class="provider-icon" style="background:rgba(255,255,255,.15)">G</span> Continue with Google</div><div class="secondary"><span class="provider-icon">✉</span> Continue with email</div></div>
+                  <div class="or" style="text-align:center">or</div>
+                  <div class="ghost-button full">Try one chat without email</div>
+                  <p class="helper" style="text-align:center;margin:8px 0 0">Temporary access has no recovery and limited history.</p>
+                  <div class="terms">18+ only. By continuing, you agree to the Terms and acknowledge the Privacy Policy.</div>
+                  <div class="close">Already have an account? <span class="text-link">Log in</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Clear hierarchy</strong>Recommended OAuth, email, and trial are distinct.</div><div class="note"><strong>Honest trial</strong>The no-email path states its limits before selection.</div><div class="note"><strong>Mode continuity</strong>The modal confirms the user will return to video.</div></div>
+          </article>
+        </div>
+
+        <div class="comparison" style="margin-top:24px">
+          <article class="state before">
+            <div class="state-label">Email before <span class="impact">Rules revealed late</span></div>
+            <div class="browser" style="min-height:500px">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Email signup</div></div>
+              <div class="modal-stage" style="min-height:435px">
+                <div class="modal">
+                  <div class="modal-title">Sign Up with Email</div>
+                  <div class="form-group"><div class="form-label">Email</div><div class="field">email</div></div>
+                  <div class="form-group"><div class="form-label">Password</div><div class="field">password</div></div>
+                  <div class="form-group"><div class="form-label">Confirm Password</div><div class="field">confirm password</div></div>
+                  <div class="captcha">✓ &nbsp; Cloudflare security check</div>
+                  <div class="primary full" style="opacity:.45">Submit</div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Hidden rule</strong>Six-character minimum is not shown upfront.</div><div class="note"><strong>Unexpected branch</strong>Gmail or “+” alias can replace the chosen flow.</div><div class="note"><strong>Unknown next step</strong>Email verification appears only after submit.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">Email after <span class="impact">Predictable + transparent</span></div>
+            <div class="browser" style="min-height:500px">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Video chat · Create account</div></div>
+              <div class="modal-stage" style="min-height:435px">
+                <div class="modal">
+                  <div class="progress"><span class="active"></span><span></span><span></span></div>
+                  <div class="modal-title">Create your free account</div>
+                  <div class="modal-sub">We’ll email a verification link, then take you to video setup.</div>
+                  <div class="form-group"><div class="form-label"><span>Email</span><span class="status-ok">✓ Valid</span></div><div class="field valid">alex+chat@gmail.com</div><div class="requirement">Prefer Google? <span class="text-link">Use one-click login</span> · or keep using email</div></div>
+                  <div class="form-group"><div class="form-label"><span>Password</span><span>Show</span></div><div class="field valid">••••••••••••</div><div class="requirement">At least 8 characters</div></div>
+                  <div class="check-row"><i class="checkbox"></i><span>I confirm that I am 18 or older and agree to the Terms.</span></div>
+                  <div class="primary full" style="margin-top:12px">Create account &amp; verify email</div>
+                  <div class="terms">Bot protection runs when you submit. Password managers and paste are supported.</div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Stable method</strong>Google is suggested without blocking email.</div><div class="note"><strong>Less effort</strong>Show password replaces confirmation.</div><div class="note"><strong>Next step visible</strong>Verification and destination are disclosed early.</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="profile">
+        <div class="section-heading">
+          <div class="section-index">03</div>
+          <div><h2>Age and profile: collect only what is necessary</h2><p>Use explicit 18+ confirmation, no preselected gender, and explain why profile data is needed.</p></div>
+        </div>
+        <div class="comparison">
+          <article class="state before">
+            <div class="state-label">Before <span class="impact">Late + defaulted</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Post-signup gate</div></div>
+              <div class="modal-stage">
+                <div class="modal">
+                  <div class="modal-title">Confirm Your Details</div>
+                  <div class="choice-grid" style="margin:18px 0"><div class="choice selected"><div class="choice-avatar"></div>Male</div><div class="choice"><div class="choice-avatar"></div>Female</div><div class="choice"><div class="choice-avatar"></div>Other</div></div>
+                  <div class="warning"><span>⚠</span><span>WARNING: To use Emerald Chat you must be over 18 years old. If you are under 18 please exit this webpage.</span></div>
+                  <div class="primary full" style="margin-top:15px">Confirm</div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Too late</strong>Age eligibility appears after account effort.</div><div class="note"><strong>Accidental data</strong>Male is selected by default.</div><div class="note"><strong>No rationale</strong>Users are not told how gender is used or displayed.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">After <span class="impact">Explicit + optional</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Before we match you</div></div>
+              <div class="modal-stage">
+                <div class="modal profile-layout">
+                  <div class="progress"><span class="active"></span><span class="active"></span><span></span></div>
+                  <div><div class="modal-title">Before we match you</div><div class="modal-sub">Confirm eligibility and choose how you appear to chat partners.</div></div>
+                  <div class="check-row"><i class="checkbox"></i><span><strong>I confirm that I am 18 or older.</strong><br><span class="helper">Required to use Emerald Chat.</span></span></div>
+                  <div><div class="form-label">How should you appear to partners? <span>Optional</span></div><div class="choice-grid"><div class="choice"><div class="choice-avatar"></div>Man</div><div class="choice"><div class="choice-avatar"></div>Woman</div><div class="choice"><div class="choice-avatar"></div>Another identity</div></div><div class="requirement">Nothing is preselected. You can change this later.</div></div>
+                  <div class="primary full">Continue to video setup</div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Affirmative consent</strong>The age action is explicit and auditable.</div><div class="note"><strong>Better data</strong>No option is selected without user intent.</div><div class="note"><strong>Lower friction</strong>Defer gender if it is not required for the first match.</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="activation">
+        <div class="section-heading">
+          <div class="section-index">04</div>
+          <div><h2>Activation: bypass navigation and simplify preferences</h2><p>Take users directly to the chosen mode, hide advanced filters, and defer monetization until value is experienced.</p></div>
+        </div>
+        <div class="comparison">
+          <article class="state before">
+            <div class="state-label">Before <span class="impact">Dashboard + mode + settings</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">/app → /app/meet → /video-chat</div></div>
+              <div class="dashboard">
+                <div class="dash-title">Welcome to the Dashboard!</div>
+                <div class="dash-card"><div><h4>Meet</h4><p>Meet and chat with people from around the world.</p></div><div class="primary">Start Chatting</div></div>
+                <div class="dash-card"><div><h4>Profile</h4><p>View and edit your Emerald profile.</p></div><div class="secondary">Edit</div></div>
+                <div class="dash-card"><div><h4>My Settings</h4><p>Edit your Emerald settings.</p></div><div class="secondary">Edit</div></div>
+                <div class="upsell">With Emerald Gold you can filter users by karma level, gender, and more.</div>
+                <div class="mode-grid"><div class="mode"><h4>1 on 1 Text Chat</h4><p>Emerald will match you to a text chat.</p><div class="primary">Start</div></div><div class="mode"><h4>Video Chat</h4><p>Emerald will match you to a video chat.</p><div class="primary">Start</div></div><div class="mode"><h4>Group Text Chat</h4><p>Match with a group of people.</p><div class="primary">Start</div></div><div class="mode"><h4>Wing Mode</h4><p>A live social matching mode.</p><div class="primary">Start</div></div></div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Repeated starts</strong>Meet, Start Chatting, mode, Start, then Find a Match.</div><div class="note"><strong>Decision overload</strong>Four modes compete with the original video intent.</div><div class="note"><strong>Premature upsell</strong>Paid filters appear before the first connection.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">After <span class="impact">One focused decision</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Video chat · Match preferences</div></div>
+              <div class="match-shell">
+                <div class="match-main">
+                  <div class="eyebrow" style="font-size:9px">Video chat</div>
+                  <h3 class="match-title">Ready to meet someone?</h3>
+                  <p class="mock-p" style="margin-top:7px">Add interests if you want a more relevant match, or start immediately.</p>
+                  <div class="form-label">Interests <span>Optional</span></div>
+                  <div class="chips"><span class="chip selected">Photography ×</span><span class="chip">Travel +</span><span class="chip">Music +</span><span class="chip">Gaming +</span></div>
+                  <details><summary>Advanced preferences</summary><p class="summary-note">Gender, guest accounts, karma, country, language, and match-speed controls.</p></details>
+                  <div class="primary full" style="margin-top:16px;min-height:44px">Find someone now</div>
+                  <div class="strong-helper">Current estimate: under 20 seconds · More filters may increase wait time</div>
+                </div>
+                <aside class="match-side"><div class="form-label">Search summary</div><div class="filter"><div class="filter-head"><span>Mode</span><strong>Video</strong></div></div><div class="filter"><div class="filter-head"><span>Interests</span><strong>1 selected</strong></div></div><div class="filter"><div class="filter-head"><span>Match speed</span><strong>Balanced</strong></div></div><p class="helper" style="margin-top:13px">Premium appears only after selecting a locked preference.</p></aside>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Direct routing</strong>Video intent skips the dashboard and mode picker.</div><div class="note"><strong>Progressive disclosure</strong>Only interests and the main action are initially visible.</div><div class="note"><strong>Value before revenue</strong>Unsolicited upgrade messages are suppressed.</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="permissions">
+        <div class="section-heading">
+          <div class="section-index">05</div>
+          <div><h2>Permissions: explain, preview, and recover</h2><p>Prime the browser request with context, test both devices separately, and preserve a text-chat fallback.</p></div>
+        </div>
+        <div class="comparison">
+          <article class="state before">
+            <div class="state-label">Before <span class="impact">Generic failure</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Video chat</div></div>
+              <div class="modal-stage">
+                <div class="modal">
+                  <div class="modal-title">Camera and microphone</div>
+                  <div class="error-box">Permission denied: Please allow access to your camera and microphone.</div>
+                  <div class="primary full" style="margin-top:14px">Try again</div>
+                  <div class="close">Close</div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>No primer</strong>The native request can arrive without enough context.</div><div class="note"><strong>Combined error</strong>Users cannot tell which device failed.</div><div class="note"><strong>No escape route</strong>Text chat is not offered at the failure point.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">After <span class="impact">Context + device check</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Video chat · Device setup</div></div>
+              <div class="mock-body compact">
+                <div class="progress"><span class="active"></span><span class="active"></span><span class="active"></span></div>
+                <h3 class="mock-h2">Ready for video?</h3>
+                <p class="mock-p" style="margin:7px 0 15px">Allow camera and microphone access so your partner can see and hear you. You can mute either at any time.</p>
+                <div class="permission-layout">
+                  <div class="video-preview"><div class="video-person"></div><div class="preview-controls"><span class="round-control">◉</span><span class="round-control">▣</span></div></div>
+                  <div class="device-list"><div class="device"><div><strong>Camera</strong><span>FaceTime HD Camera</span></div><span class="status-ok">Ready</span></div><div class="device"><div><strong>Microphone</strong><span>MacBook Microphone</span></div><span class="status-ok">Ready</span></div><div class="device"><div><strong>Speaker</strong><span>MacBook Speakers</span></div><span class="text-link">Test</span></div><div class="primary full">Continue to matching</div><div class="ghost-button full">Use text chat instead</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Permission primer</strong>The benefit and user control are explicit.</div><div class="note"><strong>Local confidence</strong>Preview and per-device status prevent surprises.</div><div class="note"><strong>Fallback preserved</strong>Denial does not restart the journey.</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="connection">
+        <div class="section-heading">
+          <div class="section-index">06</div>
+          <div><h2>Search and connection: reduce uncertainty, then help the chat start</h2><p>Make waiting informative, keep controls stable, and defer gifts or upgrades until after meaningful engagement.</p></div>
+        </div>
+        <div class="comparison">
+          <article class="state before">
+            <div class="state-label">Before <span class="impact">State changes + distractions</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Matching</div></div>
+              <div class="search-stage">
+                <div class="search-card"><div class="radar"><i class="mini-gem"></i></div><h3>Waiting</h3><p>Searching for a partner…</p><div class="danger-button full">Stop</div><div class="upsell" style="margin-top:13px">Unlock gender, karma, language, and country filters with a membership.</div><p class="helper">After a chat, this control may change between Leave, “Are you sure?”, and Next.</p></div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Unknown duration</strong>No wait estimate or search breadth.</div><div class="note"><strong>Unstable control</strong>One button changes between Stop, Leave, confirm, and Next.</div><div class="note"><strong>Competing messages</strong>Upsells interrupt the activation moment.</div></div>
+          </article>
+
+          <article class="state after">
+            <div class="state-label">After <span class="impact">Clear progress + easy first message</span></div>
+            <div class="browser">
+              <div class="browser-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><div class="address">Connected · Video chat</div></div>
+              <div class="connected">
+                <div class="partner-video"><span class="connected-badge">● Connected with Maya</span><div class="partner-avatar"></div><div class="partner-controls"><span class="round-control">◉</span><span class="round-control">▣</span><span class="round-control">⚑</span></div></div>
+                <div class="chat-panel"><h3>Say hi to Maya</h3><p>You both like photography. Pick an icebreaker or type your own message.</p><div class="icebreakers"><button class="icebreaker">What do you most enjoy photographing?</button><button class="icebreaker">Film or digital?</button><button class="icebreaker">What’s your dream photo destination?</button></div><div class="chat-actions"><div class="field">Type a message… <span>Send</span></div><div class="button-row"><div class="danger-button">Leave chat</div><div class="primary">Next partner</div></div><div class="helper" style="text-align:center">Report and block remain visible. Gifts appear only after engagement.</div></div></div>
+              </div>
+            </div>
+            <div class="notes"><div class="note"><strong>Connected state</strong>The partner name and shared context are prominent.</div><div class="note"><strong>Conversation help</strong>Interest-based prompts increase first-message rate.</div><div class="note"><strong>Stable controls</strong>Leave and Next are separate, predictable actions.</div></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">These are conversion-focused wireframes, not final visual design. Validate the sequence with controlled accounts, mobile usability tests, permission-denial cases, and event-level funnel data before implementation.</footer>
+  </div>
+</body>
+</html>
