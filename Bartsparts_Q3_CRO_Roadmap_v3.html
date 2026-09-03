@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bartsparts — Q3 CRO Testing Roadmap</title>
+<style>
+  :root{
+    --ink:#1f2733; --muted:#8b95a3; --line:#cdd4de; --fill:#eef1f5; --fill2:#e2e7ee;
+    --accent:#e8731c; --accent-bg:#fdeadb; --accent-line:#e8731c;
+    --green:#1f7a4d; --bg:#f4f6f9; --card:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 28px 64px;}
+  header.page{margin-bottom:28px;}
+  header.page h1{font-size:26px;margin:0 0 6px;font-weight:700;letter-spacing:-.2px;}
+  header.page p{margin:0;color:var(--muted);font-size:14px;max-width:760px;}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:#5c6773;}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .sw{width:22px;height:12px;border-radius:3px;display:inline-block;}
+  .sw.g{background:var(--fill2);border:1px solid var(--line);}
+  .sw.o{background:var(--accent-bg);border:1px dashed var(--accent);}
+  .fsum{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;font-size:12.5px;align-items:center;}
+  .fsum span{background:#eef2f7;color:#3f4a57;border-radius:20px;padding:5px 12px;}
+  .fsum span b{color:var(--ink);}
+  .fsum .tot{background:var(--accent-bg);color:#8a4413;font-weight:700;}
+
+  .card{background:var(--card);border:1px solid #e4e8ee;border-radius:14px;
+    padding:22px 24px 26px;margin:18px 0;box-shadow:0 1px 3px rgba(20,40,70,.05);}
+  .card .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.4px;
+    color:var(--accent);background:var(--accent-bg);padding:3px 9px;border-radius:20px;text-transform:uppercase;}
+  .card h2{font-size:18.5px;margin:10px 0 4px;font-weight:700;}
+  .change{font-size:13.5px;color:#3f4a57;margin:0 0 4px;}
+  .change b{color:var(--ink);}
+  .hyp{font-size:12.5px;color:#6a7684;font-style:italic;margin:14px 0 0;
+    border-top:1px dashed #e0e5ec;padding-top:12px;}
+  .spec{margin:12px 0 4px;border:1px solid #e7ebf0;border-radius:10px;overflow:hidden;}
+  .spec .sp{display:flex;border-top:1px solid #eef1f4;}
+  .spec .sp:first-child{border-top:none;}
+  .spec .k{flex:0 0 100px;background:#f6f8fa;color:#5f6a77;font-size:10.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.3px;padding:10px 11px;}
+  .spec .v{flex:1;padding:10px 12px;font-size:13px;color:#2c3542;}
+  .spec .v b{color:var(--ink);}
+  .section{margin:38px 0 8px;font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-.2px;border-bottom:2px solid #e6eaf0;padding-bottom:9px;}
+  .section .sc{font-size:12px;font-weight:600;color:var(--muted);}
+  /* search-results wireframe */
+  .res{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff;}
+  .res .sort{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:#fbfcfd;font-size:8.5px;color:#8b95a3;border-bottom:1px solid #eef1f4;}
+  .res .chiprow{display:flex;gap:5px;padding:7px 8px;border-bottom:1px solid #eef1f4;flex-wrap:wrap;}
+  .chip{font-size:8px;background:var(--fill);border:1px solid var(--line);border-radius:12px;padding:3px 8px;color:#5f6a77;}
+  .chip.on{background:var(--accent-bg);border-color:var(--accent);color:#8a4413;font-weight:700;}
+  .rhd{display:flex;padding:6px 8px;font-size:8px;font-weight:700;color:#8b95a3;border-bottom:1px solid var(--line);gap:6px;}
+  .rhd .c-p{flex:1;} .rhd .c-b{flex:0 0 54px;} .rhd .c-pr{flex:0 0 42px;} .rhd .c-x{flex:0 0 24px;}
+  .rr{display:flex;align-items:center;padding:8px;font-size:9px;color:#5f6a77;border-bottom:1px solid #eef1f4;gap:6px;}
+  .rr:last-child{border-bottom:none;}
+  .rr .c-p{flex:1;} .rr .c-b{flex:0 0 54px;color:#9aa4b0;} .rr .c-pr{flex:0 0 42px;}
+  .rr .cart{width:22px;height:15px;background:var(--accent);border-radius:3px;flex:0 0 auto;}
+  .rr .vbtn{background:var(--accent);color:#fff;font-size:7.5px;font-weight:700;padding:4px 7px;border-radius:3px;flex:0 0 auto;}
+  .oem{font-size:7px;font-weight:700;color:#1c6b45;background:#e8f5ee;border:1px solid #bfe3cf;border-radius:3px;padding:1px 4px;margin-left:5px;white-space:nowrap;}
+  .oem.hl{background:var(--accent-bg);border-color:var(--accent);color:#8a4413;}
+  /* mobile frame */
+  .phone{width:160px;margin:0 auto;border:2px solid #cdd4de;border-radius:16px;padding:8px 6px;background:#fff;}
+  .phone .notch{width:36px;height:4px;background:#cdd4de;border-radius:3px;margin:0 auto 7px;}
+  .mcol{display:flex;font-size:7px;color:#8b95a3;padding:5px 6px;border-bottom:1px solid #eef1f4;gap:5px;}
+  .mcol .c-p{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+  .mcard{border:1px solid var(--line);border-radius:6px;padding:7px;margin-bottom:6px;font-size:8px;color:#5f6a77;}
+  .mcard .t2{font-weight:700;color:#414a56;margin-bottom:3px;}
+  .mcard .meta{display:flex;justify-content:space-between;margin-top:5px;color:#9aa4b0;}
+  /* PDP buy-box wireframe */
+  .pdp{display:flex;gap:10px;padding:12px;}
+  .pdp .img{flex:0 0 62px;height:62px;background:var(--fill);border:1px solid #e7ebf0;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:8px;color:#9aa4b0;}
+  .pdp .buy{flex:1;font-size:9px;color:#5f6a77;min-width:0;}
+  .pdp .ttl{font-size:11px;font-weight:700;color:#414a56;margin-bottom:5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .pdp .price{font-size:14px;font-weight:800;color:#1f7a4d;}
+  .pdp .price .bp{font-size:8px;font-weight:700;color:#9aa4b0;}
+  .pdp .sub{font-size:8px;color:#9aa4b0;}
+  .pdp .rowline{margin:4px 0;}
+  .pdp .atc{background:var(--accent);color:#fff;font-size:9px;font-weight:700;text-align:center;padding:7px;border-radius:4px;margin:8px 0 0;}
+  .usp{margin-top:7px;display:flex;flex-direction:column;gap:4px;}
+  .usp .u{font-size:8px;color:#5f6a77;background:var(--fill);border-radius:3px;padding:5px 7px;}
+  .usp.hl .u{background:var(--accent-bg);color:#8a4413;}
+  .rv{margin-top:8px;}
+  .rv .lbl{font-size:8px;font-weight:700;color:#414a56;margin-bottom:4px;}
+  .rv .thumbs{display:flex;gap:5px;}
+  .rv .thumbs i{flex:1;height:26px;background:#fff;border:1px solid #ecd4bb;border-radius:4px;}
+  .inlineflag{font-size:9px;}
+  .urgent{background:#fbe3d0;border:1px solid #e39258;color:#8a3a10;font-size:8.5px;font-weight:700;padding:7px 9px;border-radius:4px;margin:7px 0;}
+  /* cart wireframe */
+  .cart{display:flex;flex-direction:column;gap:8px;padding:12px;}
+  .citems{width:100%;min-width:0;}
+  .crow{display:flex;align-items:center;gap:8px;padding:7px;border:1px solid #eef1f4;border-radius:5px;margin-bottom:6px;font-size:9px;color:#5f6a77;}
+  .crow .thumb{width:30px;height:30px;background:var(--fill);border:1px solid #e7ebf0;border-radius:4px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:6.5px;color:#9aa4b0;text-align:center;}
+  .crow .nm{flex:1;min-width:0;} .crow .qty{flex:0 0 auto;font-size:8px;color:#9aa4b0;} .crow .pr{flex:0 0 auto;font-weight:700;}
+  .summary{width:210px;margin-left:auto;border:1px solid var(--line);border-radius:6px;padding:9px;font-size:8.5px;color:#5f6a77;}
+  .crow .thumb.brand{font-weight:800;color:#2f7d32;}
+  .summary .sl{display:flex;justify-content:space-between;padding:3px 0;}
+  .summary .gt{display:flex;justify-content:space-between;padding:5px 0 3px;font-weight:800;color:#414a56;border-top:1px solid var(--line);margin-top:3px;}
+  .summary .cta{background:var(--accent);color:#fff;text-align:center;font-weight:700;padding:6px;border-radius:4px;margin-top:6px;font-size:8.5px;}
+  .summary .vat{font-size:7.5px;color:#9aa4b0;margin-top:6px;line-height:1.5;}
+  .addpart{display:inline-block;font-size:9px;color:var(--accent);font-weight:600;margin-top:3px;}
+
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  .col h3{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);
+    margin:0 0 8px;font-weight:700;}
+  .col.after h3{color:var(--accent);}
+
+  /* wireframe skeleton */
+  .wf{border:1px solid var(--line);border-radius:8px;background:#fbfcfd;overflow:hidden;font-size:11px;}
+  .topbar{display:flex;align-items:center;gap:0;background:#20262e;color:#c7ced7;
+    font-size:9.5px;padding:0;height:26px;}
+  .topbar .ti{padding:0 9px;line-height:26px;white-space:nowrap;}
+  .topbar .spacer{flex:1;}
+  .topbar .sell{background:var(--accent);color:#fff;height:26px;line-height:26px;padding:0 10px;font-weight:600;}
+  .topbar .cart{background:var(--green);width:26px;text-align:center;}
+  .logorow{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;}
+  .logo{font-weight:800;color:var(--green);font-size:12px;line-height:1;}
+  .logo small{color:var(--accent);}
+  .tiles{display:flex;gap:5px;margin-left:auto;}
+  .tiles i{width:34px;height:24px;border:1px solid var(--line);border-radius:3px;background:var(--fill);}
+  .sbar{display:flex;gap:0;padding:8px 12px;background:#2b3038;align-items:stretch;}
+  .sb-brand{background:#c9ced6;color:#333;padding:7px 8px;border-radius:4px 0 0 4px;font-size:9.5px;white-space:nowrap;display:flex;align-items:center;}
+  .sb-field{flex:1;background:#fff;padding:7px 9px;color:#98a1ad;font-size:10px;display:flex;align-items:center;}
+  .sb-btn{background:var(--accent);color:#fff;font-weight:700;padding:7px 12px;border-radius:0 4px 4px 0;font-size:9.5px;display:flex;align-items:center;}
+  .zone{margin:0;padding:12px;border-top:1px solid #eef1f4;}
+  .hero{background:var(--fill);height:64px;border-radius:5px;display:flex;flex-direction:column;justify-content:center;padding:0 12px;color:#7b8592;}
+  .hero .hl{font-size:12px;color:#414a56;font-weight:600;}
+  .hero .sub{font-size:9.5px;margin-top:3px;}
+  .dots{display:flex;gap:5px;margin-top:8px;}
+  .dots i{width:6px;height:6px;border-radius:50%;background:#c2c9d2;}
+  .dots i.on{background:var(--accent);}
+  .trust{display:flex;gap:6px;}
+  .trust .t{flex:1;background:var(--fill);border-radius:4px;padding:7px 6px;font-size:9px;color:#5f6a77;text-align:center;}
+  .brandgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;}
+  .brandgrid i{height:22px;border:1px solid var(--line);border-radius:3px;background:var(--fill);}
+  .blockrow{display:flex;flex-direction:column;gap:6px;}
+  .blk{background:var(--fill);border-radius:5px;padding:8px 10px;font-size:10px;color:#5f6a77;border:1px solid #e7ebf0;}
+
+  /* highlight */
+  .hl-box{background:var(--accent-bg)!important;border:1.5px dashed var(--accent)!important;color:#8a4413!important;}
+  .note{display:flex;gap:6px;align-items:flex-start;margin-top:7px;font-size:10.5px;color:var(--accent);}
+  .note b{font-weight:700;}
+  .pin{background:var(--accent);color:#fff;font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:10px;white-space:nowrap;}
+  .removed{opacity:.4;text-decoration:line-through;}
+  .link-help{margin-top:7px;font-size:10px;color:var(--accent);font-weight:600;}
+  .vatline{font-size:9px;background:var(--accent-bg);border:1px dashed var(--accent);color:#8a4413;border-radius:4px;padding:4px 7px;margin-top:6px;}
+  .tabs{display:flex;gap:0;margin-bottom:7px;}
+  .tabs .tb{font-size:9.5px;padding:6px 10px;border:1px solid var(--line);border-bottom:none;background:var(--fill);border-radius:5px 5px 0 0;color:#6a7684;}
+  .tabs .tb.act{background:var(--accent-bg);border-color:var(--accent);color:#8a4413;font-weight:700;}
+  .selectrow{display:flex;gap:5px;}
+  .selectrow .sel{flex:1;background:#fff;border:1px solid var(--line);border-radius:4px;padding:6px;font-size:9px;color:#98a1ad;display:flex;justify-content:space-between;}
+  .feas{margin-top:13px;font-size:12px;border-radius:8px;padding:9px 12px;display:flex;gap:8px;align-items:flex-start;}
+  .feas.ok{background:#e8f5ee;color:#1c6b45;border:1px solid #bfe3cf;}
+  .feas.no{background:#fdecec;color:#a3302c;border:1px solid #f3c9c7;}
+  .feas.warn{background:#fdf4e3;color:#8a5b12;border:1px solid #f0dcae;}
+  .feas b{font-weight:700;}
+  .clientnote{margin-top:12px;font-size:12px;background:#eef2f7;color:#3f4a57;border:1px solid #dbe1e9;border-radius:8px;padding:9px 12px;}
+  .clientnote b{color:var(--ink);font-weight:700;}
+  /* login mockup */
+  .signin{padding:12px;}
+  .si-row{display:flex;gap:10px;}
+  .si-form{flex:1;}
+  .si-lbl{font-size:9px;color:#6a7684;margin:5px 0 3px;}
+  .si-inp{height:18px;background:#fff;border:1px solid var(--line);border-radius:3px;}
+  .si-btn{margin-top:8px;background:#8a929c;color:#fff;font-size:9px;padding:5px 12px;border-radius:3px;display:inline-block;}
+  .newcust{flex:1.1;background:var(--fill);border-radius:5px;padding:10px;}
+  .newcust h5{margin:0 0 6px;font-size:10px;color:#414a56;font-weight:700;}
+  .newcust ul{margin:0;padding-left:14px;font-size:9px;color:#6a7684;line-height:1.75;}
+  .newcust .cta{margin-top:8px;background:#c9ced6;color:#333;font-size:9px;padding:5px 10px;border-radius:3px;display:inline-block;}
+  .vatbul{list-style:none;margin:6px 0 0!important;padding:5px 7px!important;}
+  /* numbered order rows */
+  .ord{display:flex;flex-direction:column;gap:6px;}
+  .ord .row{display:flex;align-items:center;gap:8px;background:var(--fill);border:1px solid #e7ebf0;border-radius:5px;padding:7px 9px;font-size:10px;color:#5f6a77;}
+  .ord .num{width:16px;height:16px;border-radius:50%;background:#c2c9d2;color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 auto;}
+  .ord .row.hl{background:var(--accent-bg);border-color:var(--accent);color:#8a4413;}
+  .ord .row.hl .num{background:var(--accent);}
+  .upflag{margin-left:auto;font-size:8.5px;color:var(--accent);font-weight:700;white-space:nowrap;}
+  .badge-ok{display:inline-block;font-size:10.5px;font-weight:700;color:#1c6b45;background:#e3f4ea;border:1px solid #bfe3cf;border-radius:20px;padding:2px 9px;margin-left:6px;vertical-align:middle;}
+  .badge-hold{display:inline-block;font-size:10.5px;font-weight:700;color:#8a5b12;background:#fcefd6;border:1px solid #f0dcae;border-radius:20px;padding:2px 9px;margin-left:6px;vertical-align:middle;}
+  .badge-direct{display:inline-block;font-size:10.5px;font-weight:700;color:#3f4a57;background:#eef2f7;border:1px solid #dbe1e9;border-radius:20px;padding:2px 9px;margin-left:6px;vertical-align:middle;}
+  .prio{border:1px solid #e4e8ee;border-radius:12px;overflow:hidden;margin-top:14px;}
+  .prio .ptier{background:#f6f8fa;font-size:12px;font-weight:800;color:var(--ink);padding:8px 12px;border-top:1px solid #e4e8ee;}
+  .prio .ptier:first-child{border-top:none;}
+  .prio .prow{display:flex;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid #eef1f4;font-size:12.5px;}
+  .prio .rank{flex:0 0 24px;font-weight:800;color:var(--accent);}
+  .prio .pname{flex:1;color:var(--ink);}
+  .prio .ppage{flex:0 0 84px;color:var(--muted);font-size:11px;}
+  .prio .pdur{flex:0 0 54px;color:var(--muted);font-size:11px;text-align:right;}
+  .prio .pnote{flex-basis:100%;font-size:11px;color:var(--muted);padding-left:34px;}
+  .gantt{margin-top:16px;overflow-x:auto;}
+  .gantt .inner{min-width:720px;}
+  .ghead{display:flex;font-size:9.5px;color:var(--muted);font-weight:600;}
+  .ghead .glabel{flex:0 0 196px;}
+  .ghead .wks{flex:1;display:flex;}
+  .ghead .wks span{flex:1;text-align:center;padding:4px 0;border-left:1px solid #eef1f4;}
+  .glane{font-size:11.5px;font-weight:800;color:var(--ink);background:#f6f8fa;padding:5px 8px;margin-top:6px;border-radius:4px;}
+  .grow{display:flex;align-items:center;border-top:1px solid #f1f4f7;}
+  .grow .glabel{flex:0 0 196px;padding:6px 8px;font-size:11px;color:var(--ink);}
+  .gtrack{position:relative;flex:1;height:24px;background-image:linear-gradient(90deg,#eef1f4 1px,transparent 1px);background-size:10% 100%;}
+  .gbar{position:absolute;top:4px;height:16px;border-radius:4px;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;padding:0 6px;white-space:nowrap;overflow:hidden;}
+  @media(max-width:720px){.ba{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <h1>Bartsparts.com — Q3 CRO Testing Roadmap <span style="font-size:14px;color:var(--accent);font-weight:700;">v3</span></h1>
+    <p>Low-fidelity before/after wireframes for the Q3 test shortlist, grouped by page — <b>updated after the 23 Jul client call (v3)</b>. These illustrate placement and intent only, not final visual design. Each test isolates a single change, measured on its primary metric with RPV / CVR as a guardrail. See the prioritization &amp; timeline at the end.</p>
+    <div class="legend">
+      <span><i class="sw g"></i> Existing element</span>
+      <span><i class="sw o"></i> The change being tested</span>
+      <span><span class="badge-ok" style="margin:0;">Approved</span> to run</span>
+      <span><span class="badge-hold" style="margin:0;">On hold</span> awaiting a decision</span>
+    </div>
+    <div class="fsum">
+      <span class="tot">20 tests · 17 approved · 3 on hold</span>
+      <span>Homepage <b>3</b></span>
+      <span>Search results <b>5</b></span>
+      <span>Product page <b>7</b></span>
+      <span>Cart <b>5</b></span>
+    </div>
+  </header>
+
+  <div class="section">Homepage <span class="sc">· 3 tests</span></div>
+
+  <div class="clientnote" style="border-color:#cfe0d6;background:#eef6f0;"><b>Implemented directly (not A/B tested):</b> the <b>search placeholder</b> copy (“Search by part number, brand, or description”) and the <b>hero headline</b> copy (“Over 3,000,000 machinery parts across 2,100+ dealer warehouses” + subline). Per the 23 Jul call, minor copy updates go straight to the site rather than into a test.</div>
+
+  <!-- HP TEST 1 -->
+  <div class="card">
+    <span class="tag">Q3 · Test 1 · #04</span> <span class="badge-ok">Approved</span>
+    <h2>Simplify the homepage search bar</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Simplify the homepage search bar (#04)</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The search area carries extra weight — a “Shop by Brand” dropdown and a rotating hero slider — that distracts from the primary task. Heatmap: 43% of homepage clicks go to search, &lt;1% to brands, &lt;2% to nav.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Simplify the search bar: remove the “Shop by Brand” button and drop the hero slider (single static banner). Keep the same copy, CTA and placeholder so only the structure changes.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we simplify the search bar and remove the slider, homepage search-submit rate increases because the primary action is clearer and less distracting. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf">
+          <div class="sbar"><div class="sb-brand">SHOP BY BRAND ▾</div><div class="sb-field">Search Part Number or use Key Words</div><div class="sb-btn">FIND PARTS</div></div>
+          <div class="zone" style="border-top:none;"><div class="hero"><div class="hl">Rotating hero slider</div><div class="sub">buyer · seller · buyer</div><div class="dots"><i class="on"></i><i></i><i></i></div></div></div>
+        </div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf">
+          <div class="sbar"><div class="sb-field hl-box" style="border-radius:4px 0 0 4px;">Search Part Number or use Key Words</div><div class="sb-btn">FIND PARTS</div></div>
+          <div class="zone" style="border-top:none;"><div class="hero hl-box"><div class="hl" style="color:#8a4413;">Single static banner</div><div class="sub" style="color:#a9683f;">no slider · Shop-by-Brand removed</div></div></div>
+        </div>
+        <div class="note"><span class="pin">CHANGE</span> Remove Shop-by-Brand button + slider (same copy / CTA).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEST 8 -->
+  <div class="card">
+    <span class="tag">Q3 · Test 2 · moved to login screen</span> <span class="badge-ok">Approved</span>
+    <h2>EU business VAT benefit in the sign-up box</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">EU business VAT benefit in the sign-up box</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The cross-border VAT-deduction benefit — a strong B2B incentive — is buried in a footer “Payments &amp; VAT” link, so professional buyers see no concrete reason to register.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add the VAT-deduction benefit line into the existing “New customer?” box on the login / sign-up screen, at the account-creation decision point. Builds on the winning #08 VAT banner.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we surface the VAT benefit at the account-creation decision point, business-account registration increases because professional buyers see a concrete financial reason to register. Guardrail: downstream CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col">
+        <h3>Control — sign-in page</h3>
+        <div class="wf"><div class="signin">
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#414a56;margin-bottom:8px;">SIGN IN</div>
+          <div class="si-row">
+            <div class="si-form">
+              <div class="si-lbl">Email address</div><div class="si-inp"></div>
+              <div class="si-lbl">Password</div><div class="si-inp"></div>
+              <div class="si-btn">Sign in</div>
+            </div>
+            <div class="newcust">
+              <h5>New customer?</h5>
+              <ul><li>Check out faster</li><li>Save shipping addresses</li><li>Access order history</li><li>Track new orders</li></ul>
+              <div class="cta">Create account</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+      <div class="col after">
+        <h3>Variant — sign-in page</h3>
+        <div class="wf"><div class="signin">
+          <div style="text-align:center;font-size:11px;font-weight:700;color:#414a56;margin-bottom:8px;">SIGN IN</div>
+          <div class="si-row">
+            <div class="si-form">
+              <div class="si-lbl">Email address</div><div class="si-inp"></div>
+              <div class="si-lbl">Password</div><div class="si-inp"></div>
+              <div class="si-btn">Sign in</div>
+            </div>
+            <div class="newcust">
+              <h5>New customer?</h5>
+              <ul><li>Check out faster</li><li>Save shipping addresses</li><li>Access order history</li><li>Track new orders</li></ul>
+              <div class="vatline vatbul">EU business? Add a valid VAT number for eligible cross-border VAT deduction.</div>
+              <div class="cta">Create account</div>
+            </div>
+          </div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> VAT benefit added to the “New customer?” box.</div>
+      </div>
+    </div>
+    <div class="feas ok"><span><b>Feasibility (verified):</b> The live sign-in page already has a “New customer?” benefits box (Check out faster, Save addresses, Order history, Track orders) — adding one VAT line fits naturally with no layout change.</span></div>
+  </div>
+
+  <!-- HP TEST 3 -->
+  <div class="card">
+    <span class="tag">Q3 · Test 3</span> <span class="badge-ok">Approved</span>
+    <h2>Repurpose the header: brands → simplified navigation</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Repurpose the header: brands → simplified navigation</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The header’s prime space holds 6 brand logos that barely get used — heatmap shows &lt;1% of clicks on brands and &lt;2% on nav, vs 43% on search. The top black nav bar adds clutter without pulling traffic.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Move the brand logos into an “Our Brands” carousel below the hero, place the navigation links where the brands were, and drop the black nav bar. Keeps the brand path available lower down while making search the clear focus.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we simplify the header (brands out, nav in, black bar removed), search focus and usability improve while brand-led buyers still reach brands below the hero. Primary metric: search-initiation; guardrail: brand-page and nav click-through must hold. CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf">
+          <div class="topbar"><span class="ti">Brands</span><span class="ti">How we work</span><span class="ti">Support</span><span class="spacer"></span><span class="ti">Login</span><span class="sell">SELL</span></div>
+          <div class="logorow"><div class="logo">BARTS<small>PARTS</small></div>
+            <div class="tiles"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="sbar"><div class="sb-brand">SHOP BY BRAND ▾</div><div class="sb-field">Search Part Number or use Key Words</div><div class="sb-btn">FIND PARTS</div></div>
+          <div class="zone"><div class="hero"><div class="hl">Hero + search</div><div class="sub">brands in header · black nav bar</div></div></div>
+        </div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf">
+          <div class="logorow"><div class="logo">BARTS<small>PARTS</small></div>
+            <div class="hl-box" style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;font-size:9px;padding:5px 8px;border-radius:4px;">
+              <span>Brands</span><span>How we work</span><span>Support</span><span>Login</span></div></div>
+          <div class="sbar"><div class="sb-brand">SHOP BY BRAND ▾</div><div class="sb-field">Search Part Number or use Key Words</div><div class="sb-btn">FIND PARTS</div></div>
+          <div class="zone"><div class="hero"><div class="hl">Hero + search</div><div class="sub">black bar removed · brands moved below ↓</div></div>
+            <div class="hl-box" style="margin-top:8px;display:flex;align-items:center;gap:6px;padding:8px;border-radius:5px;font-size:9px;">
+              <span style="font-weight:700;">Our Brands</span><span>‹</span>
+              <span style="display:flex;gap:4px;flex:1;">
+                <i style="height:15px;flex:1;background:#fff;border:1px solid #ecd4bb;border-radius:2px;"></i>
+                <i style="height:15px;flex:1;background:#fff;border:1px solid #ecd4bb;border-radius:2px;"></i>
+                <i style="height:15px;flex:1;background:#fff;border:1px solid #ecd4bb;border-radius:2px;"></i>
+                <i style="height:15px;flex:1;background:#fff;border:1px solid #ecd4bb;border-radius:2px;"></i>
+                <i style="height:15px;flex:1;background:#fff;border:1px solid #ecd4bb;border-radius:2px;"></i>
+                <i style="height:15px;flex:1;background:#fff;border:1px solid #ecd4bb;border-radius:2px;"></i></span>
+              <span>›</span><span style="margin-left:auto;color:#a9683f;">13 / 53</span></div>
+          </div>
+        </div>
+        <div class="note"><span class="pin">CHANGE</span> Brands → below hero · nav into header · black bar removed.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>Client note (23 Jul):</b> kept as one test — the freed header space must be filled with the nav, so the two moves are coupled. Design will try to keep it to one obvious change (e.g. keep the logo, move everything up). Affects all pages → extra QA. Category links need a feasibility check with Anca.</span></div>
+  </div>
+
+  <div class="section">Search results page <span class="sc">· 5 tests</span></div>
+
+  <!-- SRP TEST 1 -->
+  <div class="card">
+    <span class="tag">Q3 · Search · Test 1</span> <span class="badge-ok">Approved</span>
+    <h2>In-stock quick filter</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">In-stock quick filter</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">Stock is a primary purchase driver, but the current filters emphasise brand, category, price, featured products, and free shipping. Competitors (All States, AUTODOC) make availability easier to act on.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one “In stock now” filter chip above the search results.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we add an immediate in-stock filter, search-results-to-product-detail rate increases because buyers can remove unavailable options with one action. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col">
+        <h3>Control</h3>
+        <div class="wf"><div class="res">
+          <div class="sort"><span>10,001 results for “John Deere plug”</span><span>Sort by: Relevance ▾</span></div>
+          <div class="chiprow"><span class="chip">Brand ▾</span><span class="chip">Category ▾</span><span class="chip">Price ▾</span><span class="chip">Free shipping</span></div>
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+        </div></div>
+      </div>
+      <div class="col after">
+        <h3>Variant</h3>
+        <div class="wf"><div class="res">
+          <div class="sort"><span>10,001 results for “John Deere plug”</span><span>Sort by: Relevance ▾</span></div>
+          <div class="chiprow"><span class="chip on">✓ In stock now</span><span class="chip">Brand ▾</span><span class="chip">Category ▾</span><span class="chip">Price ▾</span></div>
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> New “In stock now” chip above results.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>Feasibility check (Anca):</b> confirm the stock data lets us accurately flag in-stock vs out-of-stock — out-of-stock products are currently listed in results, which is exactly the problem this solves.</span></div>
+  </div>
+
+  <!-- SRP TEST 2 -->
+  <div class="card">
+    <span class="tag">Q3 · Search · Test 2</span> <span class="badge-ok">Approved</span>
+    <h2>Original OEM result badge</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Original OEM result badge</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">Bartsparts’ original/OEM guarantee is a core advantage over aftermarket-heavy competitors, but the site-wide reassurance may not be visible while users compare individual results.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one “Original OEM” badge to every eligible search-result card.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we label original OEM status on each result, search-results-to-product-detail rate increases because buyers can resolve authenticity anxiety without leaving the list. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col">
+        <h3>Control</h3>
+        <div class="wf"><div class="res">
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – TCU18997 – Washer</span><span class="c-pr">€2.82</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+        </div></div>
+      </div>
+      <div class="col after">
+        <h3>Variant</h3>
+        <div class="wf"><div class="res">
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip <span class="oem hl">Original OEM</span></span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter <span class="oem hl">Original OEM</span></span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – TCU18997 – Washer <span class="oem hl">Original OEM</span></span><span class="c-pr">€2.82</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> “Original OEM” badge on each result.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>Feasibility check (Anca):</b> a “non-original” tag already exists on some products; plan is to treat untagged items as original and show the badge only on those, excluding non-original from the badge. Confirm the tagging is reliable enough to drive this before building.</span></div>
+  </div>
+
+  <!-- SRP TEST 3 -->
+  <div class="card">
+    <span class="tag">Q3 · Search · Test 3 · lower priority</span> <span class="badge-ok">Approved</span>
+    <h2>Product — Brand — Price column order</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Product — Brand — Price column order</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The current column arrangement makes it harder to scan each result in the buyer’s natural evaluation sequence: identify the product, verify the brand, then assess the price.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Change only the search-results column order to: Product — Brand — Price.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we reorder the existing columns to Product — Brand — Price, search-result product click-through rate increases because buyers evaluate the most important information in a clearer sequence. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col">
+        <h3>Control</h3>
+        <div class="wf"><div class="res">
+          <div class="rhd"><span class="c-p">Parts</span><span class="c-pr">Price from</span><span class="c-b">Brand</span><span class="c-x"></span></div>
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+        </div></div>
+      </div>
+      <div class="col after">
+        <h3>Variant</h3>
+        <div class="wf"><div class="res">
+          <div class="rhd hl-box"><span class="c-p">Product</span><span class="c-b">Brand</span><span class="c-pr">Price</span><span class="c-x"></span></div>
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-b">John Deere</span><span class="c-pr">€2.50</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-b">John Deere</span><span class="c-pr">€4.78</span><span class="cart"></span></div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> Columns reordered; price moves to the end.</div>
+      </div>
+    </div>
+    <div class="clientnote"><b>Client note:</b> lower priority — prioritise the CTA change (Search Test 4) first, then revisit column order.</div>
+  </div>
+
+  <!-- SRP TEST 4 -->
+  <div class="card">
+    <span class="tag">Q3 · Search · Test 4 · prioritise first</span> <span class="badge-ok">Approved</span>
+    <h2>“View Product” text CTA</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">“View Product” text CTA</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The current cart icon is misleading — its link actually goes to the product page, not the cart — and it doesn’t communicate what happens when clicked. Heatmap: buyers prefer clicking the product name over the icon.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Replace the cart icon with an explicit “View Product” button (its link already goes to the product page, so behaviour is unchanged).</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we replace the cart icon with a clear “View Product” button, click-through to the PDP increases because the action matches intent — buyers want to inspect the part before adding. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col">
+        <h3>Control</h3>
+        <div class="wf"><div class="res">
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="cart"></span></div>
+        </div></div>
+      </div>
+      <div class="col after">
+        <h3>Variant</h3>
+        <div class="wf"><div class="res">
+          <div class="rr"><span class="c-p">John Deere – AL790051 – Clip</span><span class="c-pr">€2.50</span><span class="c-b">John Deere</span><span class="vbtn" style="outline:1.5px dashed var(--accent);outline-offset:1px;">View Product</span></div>
+          <div class="rr"><span class="c-p">John Deere – M148936 – Filter</span><span class="c-pr">€4.78</span><span class="c-b">John Deere</span><span class="vbtn" style="outline:1.5px dashed var(--accent);outline-offset:1px;">View Product</span></div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> Cart icon → labelled “View Product” button.</div>
+      </div>
+    </div>
+    <div class="clientnote"><b>Client direction (23 Jul):</b> switch the confusing cart icon → “View Product” first (the link already goes to the product page); prioritise this. Testing “View Product vs Add to Cart” is a later follow-up once this is validated.</div>
+  </div>
+
+  <!-- SRP TEST 5 -->
+  <div class="card">
+    <span class="tag">Q3 · Search · Test 5</span> <span class="badge-ok">Approved</span>
+    <h2>Mobile card layout</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Mobile card layout</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The desktop-style column layout is hard to scan on narrow mobile screens, where compressed columns reduce the visual separation between products and their details.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Change only the mobile search-results presentation from a column list to individual product cards — without adding, removing, or changing any information.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we present the same result information as cards on mobile, mobile search-result product click-through rate increases because each product and its details are easier to distinguish and scan. Guardrail: mobile CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col">
+        <h3>Control — mobile</h3>
+        <div class="wf" style="background:#fbfcfd;padding:10px;"><div class="phone"><div class="notch"></div>
+          <div class="mcol"><span class="c-p">Parts</span><span>Price</span><span>Brand</span></div>
+          <div class="mcol"><span class="c-p">JD – AL790051 – Clip…</span><span>€2.50</span><span>JD ▢</span></div>
+          <div class="mcol"><span class="c-p">JD – M148936 – Filter…</span><span>€4.78</span><span>JD ▢</span></div>
+          <div class="mcol"><span class="c-p">JD – TCU18997 – Wash…</span><span>€2.82</span><span>JD ▢</span></div>
+          <div class="mcol"><span class="c-p">JD – M76442 – Spring…</span><span>€4.05</span><span>JD ▢</span></div>
+        </div></div>
+      </div>
+      <div class="col after">
+        <h3>Variant — mobile</h3>
+        <div class="wf" style="background:#fbfcfd;padding:10px;"><div class="phone"><div class="notch"></div>
+          <div class="mcard hl-box"><div class="t2">John Deere – AL790051 – Clip</div><div>Brand: John Deere</div><div class="meta"><span style="color:#8a4413;font-weight:700;">€2.50</span><span style="color:#8a4413;font-weight:700;">View Product ›</span></div></div>
+          <div class="mcard"><div class="t2">John Deere – M148936 – Filter</div><div>Brand: John Deere</div><div class="meta"><span>€4.78</span><span>View Product ›</span></div></div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> Same info, column list → scannable cards (mobile only).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">Product page <span class="sc">· 7 tests</span></div>
+
+  <!-- PDP TEST 1 -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 1</span> <span class="badge-ok">Approved</span>
+    <h2>Explicit OEM status badge</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Explicit OEM status badge</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The PDP doesn’t state beside the title whether the item is original OEM or non-original, although authenticity is a core buyer concern. Sparex exposes “Product Family: OEM”; Agriline explains when parts are not manufacturer-made.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one status badge beside the PDP title — “Original OEM” or “Non-original” — using the product’s existing classification.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we display OEM status beside the title, product-page add-to-cart rate increases because buyers can resolve authenticity uncertainty before evaluating the offer. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="sub">(Price excludes tax and shipping cost)</div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit <span class="oem hl">Original OEM</span></div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="sub">(Price excludes tax and shipping cost)</div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> OEM status badge beside the title.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>Feasibility check (Anca):</b> same as the search badge — relies on the “non-original” tag; confirm untagged items can be safely treated as original before building. Do PDP alongside / after the search version.</span></div>
+  </div>
+
+  <!-- PDP TEST 2 -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 2</span> <span class="badge-ok">Approved</span>
+    <h2>Warehouse-scoped stock labels</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Warehouse-scoped stock labels</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">On multi-warehouse products, “Stock” is the selected warehouse while “Total Stock” is availability across all warehouses (e.g. 1 in the selected warehouse, 15 in total). A generic “[n] units in stock” would be ambiguous and could misrepresent the selected offer.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Change only the stock labels to “This warehouse: [qty] in stock” and, when others have stock, “All warehouses: [total] in stock.” Single-warehouse products show only the first label.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we distinguish selected-warehouse stock from total marketplace stock, add-to-cart rate increases because buyers understand both the quantity on the current offer and the alternatives. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline hl-box"><b>This warehouse:</b> 1 in stock<br><b>All warehouses:</b> 15 in stock</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> Ambiguous stock → warehouse-scoped labels.</div>
+      </div>
+    </div>
+    <div class="clientnote"><b>Note:</b> only applies to multi-warehouse products, which may not get enough traffic to reach significance — we’ll watch sample size during the test.</div>
+  </div>
+
+  <!-- PDP TEST 3 -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 3</span> <span class="badge-ok">Approved</span>
+    <h2>Human-readable warehouse origin</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Human-readable warehouse origin</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">“Sold by Warehouse 2538” identifies an internal warehouse but not where the shipment originates; the adjacent flag requires recognition. Competitors communicate the source in plain language.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Replace only the numeric warehouse label with “Ships From [flag] [country] warehouse,” keeping the existing country flag inline.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we replace the internal warehouse number with a recognisable origin, add-to-cart rate increases because buyers can better assess the source and likely shipping journey. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Sold by Warehouse 2538 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline hl-box">Ships From <span class="inlineflag">🇳🇱</span> Netherlands warehouse</div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> “Warehouse 2538” → “Ships from Netherlands warehouse”.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDP TEST 4 -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 4</span> <span class="badge-ok">Approved</span>
+    <h2>VAT basis attached to price</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">VAT basis attached to price</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The price is labelled “Best price,” while the tax basis sits in a lighter parenthetical line below. AUTODOC attaches VAT treatment directly to price; Sparex keeps the active VAT view visible in the header.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Change only the price presentation to show “€[price] excl. VAT” on the same line, keeping the amount and the existing “Best price” tag unchanged.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we attach “excl. VAT” directly to the numeric price, add-to-cart rate increases because professional buyers can interpret the offer correctly at first glance. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="sub">(Price excludes tax and shipping cost)</div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price"><span class="hl-box" style="display:inline-block;">€61.51 <span style="font-size:8px;font-weight:700;">excl. VAT</span></span> <span class="bp">Best price</span></div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> “excl. VAT” attached to the price line.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDP TEST 5 -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 5</span> <span class="badge-hold">On hold</span>
+    <h2>USP reassurance block below Add to Cart</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">USP reassurance block below Add to Cart</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The purchase area doesn’t summarise returns, shipping, and specialist support at the point of commitment, although these address three major sources of purchase anxiety.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one USP block directly below Add to Cart: “14-Day Returns — Hassle-free on all parts,” “Fast EU Shipping — Trusted delivery across Europe,” “Expert Support — Machinery specialists, Mon–Fri.”</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we place the USP reassurance block directly below Add to Cart, add-to-cart rate increases because buyers see concise risk, fulfilment, and support assurances next to the purchase action. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control — current live PDP</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div style="background:#eaf3ff;border:1px solid #cfe0f5;color:#2c4a72;font-size:8px;padding:5px 7px;border-radius:4px;margin:4px 0;">Buying for a company? Save on VAT instantly. Create a business account →</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div style="background:#eaf3ff;border:1px solid #cfe0f5;color:#2c4a72;font-size:8px;padding:5px 7px;border-radius:4px;margin:4px 0;">Buying for a company? Save on VAT instantly. Create a business account →</div>
+          <div class="atc">Add to Cart</div>
+          <div class="usp hl">
+            <div class="u"><b>14-Day Returns</b> — Hassle-free on all parts</div>
+            <div class="u"><b>Fast EU Shipping</b> — Trusted delivery across Europe</div>
+            <div class="u"><b>Expert Support</b> — Machinery specialists, Mon–Fri</div>
+          </div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> USP block below Add to Cart (blue = already-live VAT banner).</div>
+      </div>
+    </div>
+    <div class="clientnote"><b>Client note:</b> shown on the current live PDP — the blue banner is the already-deployed VAT element (won test #08). The new change is the USP block stacked below Add to Cart (lighter styling than the cart version).</div>
+    <div class="feas warn"><span><b>On hold (23 Jul):</b> wait for the cart USP-test results and the Mida tracking investigation before running the PDP version — if the cart USP proves out, we bring this one forward.</span></div>
+  </div>
+
+  <!-- PDP TEST 6 -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 6</span> <span class="badge-hold">On hold</span>
+    <h2>Delivery estimate beside warehouse location</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Delivery estimate beside warehouse location</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The PDP identifies the supplying warehouse but not when the shipment is expected to arrive, leaving buyers unable to judge machinery-downtime risk from the purchase area.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one line next to the warehouse location: “Estimated delivery: up to 5 days.”</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we show the up-to-five-day estimate beside the warehouse location, add-to-cart rate increases because buyers can evaluate shipment origin and expected speed together. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Sold by Warehouse 595 <span class="inlineflag">🇳🇱</span></div>
+          <div class="rowline"><span class="hl-box">Estimated delivery: up to 5 days</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> Delivery estimate beside the warehouse.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>On hold (23 Jul):</b> delivery time depends on which warehouse ships and the buyer’s distance, so “up to 5 days” is risky to promise. Tina to check internally whether we can commit before this runs.</span></div>
+  </div>
+
+  <!-- PDP TEST 7 (was 8) -->
+  <div class="card">
+    <span class="tag">Q3 · PDP · Test 7</span> <span class="badge-ok">Approved</span>
+    <h2>Recently viewed items below Add to Cart</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Recently viewed items below Add to Cart</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">Buyers comparing similar or cross-referenced parts have no immediate route from the purchase area back to products they viewed earlier, increasing the effort to continue comparison.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one “Recently viewed” product module directly below the Add to Cart area.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we place recently viewed items below Add to Cart, product-page exit rate decreases because buyers can return to previously considered parts and continue comparing without restarting their search. Guardrail: add-to-cart rate / CVR must not drop.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+        </div></div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="pdp"><div class="img">IMG</div><div class="buy">
+          <div class="ttl">John Deere – EPC046901 – Seal Kit</div>
+          <div class="price">€61.51 <span class="bp">Best price</span></div>
+          <div class="rowline">Stock: 1 · Total Stock: 15</div>
+          <div class="atc">Add to Cart</div>
+          <div class="rv hl-box" style="padding:7px;">
+            <div class="lbl">Recently viewed</div>
+            <div class="thumbs"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div></div></div>
+        <div class="note"><span class="pin">CHANGE</span> “Recently viewed” module below Add to Cart.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">Cart page <span class="sc">· 5 tests</span></div>
+
+  <!-- CART TEST 1 -->
+  <div class="card">
+    <span class="tag">Q3 · Cart · Test 1</span> <span class="badge-ok">Approved</span>
+    <h2>Brand logo in the cart row</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Brand logo in the cart row</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">Every cart row shows the same generic Bartsparts logo, so all items look identical and buyers get no manufacturer confirmation before checkout — even though the PDP already shows the product’s brand logo.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Replace the generic Bartsparts logo in each cart row with the product’s brand logo (the same image shown on the PDP). Keep the Bartsparts mark as the fallback when no brand logo exists.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we show the product’s brand logo in the cart row, cart-to-checkout initiation rate increases because buyers can reconfirm the manufacturer and tell items apart before committing. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – M148936 – Filter</div><div class="qty">Qty 2</div><div class="pr">€9.56</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€71.07</span></div>
+            <div class="sl"><span>Shipping</span><span>€7.50</span></div>
+            <div class="gt"><span>Grand total</span><span>€78.57</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb brand hl-box">JOHN DEERE</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+            <div class="crow"><div class="thumb brand hl-box">JOHN DEERE</div><div class="nm">John Deere – M148936 – Filter</div><div class="qty">Qty 2</div><div class="pr">€9.56</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€71.07</span></div>
+            <div class="sl"><span>Shipping</span><span>€7.50</span></div>
+            <div class="gt"><span>Grand total</span><span>€78.57</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> Generic Bartsparts logo → product’s brand logo (Bartsparts as fallback).</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>Feasibility check (Barış):</b> the brand-name visual exists per product and should be technically doable in the cart — confirm before build.</span></div>
+  </div>
+
+  <!-- CART TEST 2 -->
+  <div class="card">
+    <span class="tag">Q3 · Cart · Test 2</span> <span class="badge-hold">On hold</span>
+    <h2>Cart delivery estimate</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Cart delivery estimate</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The cart displays shipping cost but not when the order is expected to arrive, while Messick’s gives a concrete “Order Ships: Today” fulfilment signal.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add one line directly below the Shipping row: “Estimated delivery: up to 5 days.”</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we show the delivery estimate beside the cart’s shipping information, cart-to-checkout initiation rate increases because buyers can evaluate downtime risk before entering checkout. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€61.51</span></div>
+            <div class="sl"><span>Shipping</span><span>€7.50</span></div>
+            <div class="sl"><span>Tax</span><span>€0.00</span></div>
+            <div class="gt"><span>Grand total</span><span>€69.01</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€61.51</span></div>
+            <div class="sl"><span>Shipping</span><span>€7.50</span></div>
+            <div class="sl hl-box"><span>Est. delivery</span><span>up to 5 days</span></div>
+            <div class="sl"><span>Tax</span><span>€0.00</span></div>
+            <div class="gt"><span>Grand total</span><span>€69.01</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> Delivery estimate below the Shipping row.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>On hold (23 Jul):</b> same delivery-promise risk as the PDP version — pending Tina’s internal check on whether “up to 5 days” can be committed.</span></div>
+  </div>
+
+  <!-- CART TEST 3 -->
+  <div class="card">
+    <span class="tag">Q3 · Cart · Test 3</span> <span class="badge-ok">Approved</span>
+    <h2>VAT guidance before the grand total</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">VAT guidance before the grand total</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">VAT-deduction guidance sits below the checkout CTA and USP block, even though VAT-registered businesses need it to assess the payable total.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Move only the existing VAT guidance to directly below the Tax row and above the Grand total, without changing its copy.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we place VAT guidance inside the order summary, cart-to-checkout initiation among business buyers increases because they can evaluate tax eligibility before deciding to proceed. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€61.51</span></div>
+            <div class="sl"><span>Shipping</span><span>€7.50</span></div>
+            <div class="sl"><span>Tax</span><span>€0.00</span></div>
+            <div class="gt"><span>Grand total</span><span>€69.01</span></div>
+            <div class="cta">Checkout</div>
+            <div class="vat">VAT-registered EU business? Deduct VAT — add your VAT number.</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€61.51</span></div>
+            <div class="sl"><span>Shipping</span><span>€7.50</span></div>
+            <div class="sl"><span>Tax</span><span>€0.00</span></div>
+            <div class="vat hl-box" style="margin:5px 0;padding:4px 6px;">VAT-registered EU business? Deduct VAT — add your VAT number.</div>
+            <div class="gt"><span>Grand total</span><span>€69.01</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> VAT guidance moved above the Grand total.</div>
+      </div>
+    </div>
+    <div class="clientnote"><b>Note (23 Jul):</b> current VAT guidance is long and buried — the cart heatmap shows about half of users never scroll to it. Use a shorter line and place it by the total so it can’t be missed.</div>
+  </div>
+
+  <!-- CART TEST 4 -->
+  <div class="card">
+    <span class="tag">Q3 · Cart · Test 4</span> <span class="badge-ok">Approved</span>
+    <h2>Per-line stock &amp; origin reassurance</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Per-line stock &amp; origin reassurance</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">Bartsparts confirms stock after an order is placed and ships from many different warehouses, creating “will this be available / where’s it coming from?” doubt at the point of commitment. The cart row shows only Item, Price, Qty, Total — no availability or origin cue.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Add a small reassurance line to each cart row — “✓ In stock · Ships from [country]” — reusing the stock and warehouse-country data already shown on the PDP.</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we reconfirm stock and shipping origin on each cart line, cart-to-checkout initiation rate increases because buyers resolve availability doubt before entering checkout. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – M148936 – Filter</div><div class="qty">Qty 2</div><div class="pr">€9.56</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€71.07</span></div>
+            <div class="gt"><span>Grand total</span><span>€78.57</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit<div class="hl-box" style="display:inline-block;font-size:7.5px;margin-top:3px;padding:2px 5px;border-radius:3px;">✓ In stock · Ships from <span class="inlineflag">🇳🇱</span> Netherlands</div></div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – M148936 – Filter<div class="hl-box" style="display:inline-block;font-size:7.5px;margin-top:3px;padding:2px 5px;border-radius:3px;">✓ In stock · Ships from <span class="inlineflag">🇩🇪</span> Germany</div></div><div class="qty">Qty 2</div><div class="pr">€9.56</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€71.07</span></div>
+            <div class="gt"><span>Grand total</span><span>€78.57</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> “✓ In stock · Ships from [country]” on each cart line.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART TEST 5 -->
+  <div class="card">
+    <span class="tag">Q3 · Cart · Test 5 · checkout priority</span> <span class="badge-ok">Approved</span>
+    <h2>Set shipping-cost expectations before checkout</h2>
+    <div class="spec">
+      <div class="sp"><span class="k">Test name</span><div class="v">Set shipping-cost expectations before checkout</div></div>
+      <div class="sp"><span class="k">Problem</span><div class="v">The cart shows a subtotal but no signal that tax and shipping are still to come, so buyers reach the payment page, see a higher number, and drop off — a likely driver of the checkout drop-off Tina is seeing.</div></div>
+      <div class="sp"><span class="k">Solution</span><div class="v">Make the pending cost explicit: change the shipping row to a clear “Calculate shipping” action and label the Grand total “excl. tax &amp; shipping.” Once calculated, Grand total = subtotal + shipping. (Final copy to be checked against competitors.)</div></div>
+      <div class="sp"><span class="k">Hypothesis</span><div class="v">If we set correct cost expectations in the cart, checkout drop-off decreases because buyers aren’t surprised by tax/shipping on the payment page. Guardrail: CVR / RPV.</div></div>
+    </div>
+    <div class="ba">
+      <div class="col"><h3>Control</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€61.51</span></div>
+            <div class="sl"><span>Shipping</span><span style="color:#9aa4b0;">Add info ›</span></div>
+            <div class="gt"><span>Grand total</span><span>€61.51</span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+      </div>
+      <div class="col after"><h3>Variant</h3>
+        <div class="wf"><div class="cart">
+          <div class="citems">
+            <div class="crow"><div class="thumb">BARTS</div><div class="nm">John Deere – EPC046901 – Seal Kit</div><div class="qty">Qty 1</div><div class="pr">€61.51</div></div>
+          </div>
+          <div class="summary">
+            <div class="sl"><span>Subtotal</span><span>€61.51</span></div>
+            <div class="sl hl-box"><span>Calculate shipping</span><span>›</span></div>
+            <div class="gt hl-box"><span>Grand total</span><span>€61.51 <span style="font-size:7px;font-weight:600;">excl. tax &amp; shipping</span></span></div>
+            <div class="cta">Checkout</div>
+          </div>
+        </div></div>
+        <div class="note"><span class="pin">CHANGE</span> “Calculate shipping” action + “excl. tax &amp; shipping” on the Grand total.</div>
+      </div>
+    </div>
+    <div class="feas warn"><span><b>Blocked / priority (23 Jul):</b> Tina’s top checkout priority (backlog #05), but it <b>can’t start until the live cart-USP test finishes</b> — only one cart test can run at a time. Revisit shipping copy vs competitors before launch.</span></div>
+  </div>
+
+  <div class="section">Prioritization &amp; timeline <span class="sc">· Q3</span></div>
+  <p style="font-size:13px;color:#3f4a57;margin:0 0 4px;">Assumed durations: Homepage &amp; PDP tests ≈ <b>2 weeks</b>; Search &amp; Cart tests ≈ <b>1 month</b> (lower traffic). Homepage and PDP can run several tests in the quarter; Search and Cart are the bottleneck, so some items roll into next quarter. Cart tests run one at a time and are gated by the live cart-USP test.</p>
+
+  <div class="prio">
+    <div class="ptier">P1 · Start next week (late July)</div>
+    <div class="prow"><span class="rank">1</span><span class="pname">Simplify homepage search bar (#04)</span><span class="ppage">Homepage</span><span class="pdur">2 wks</span></div>
+    <div class="prow"><span class="rank">2</span><span class="pname">VAT excl. next to price</span><span class="ppage">PDP</span><span class="pdur">2 wks</span></div>
+    <div class="ptier">P2 · August</div>
+    <div class="prow"><span class="rank">3</span><span class="pname">Repurpose header: brands → nav</span><span class="ppage">Homepage</span><span class="pdur">2 wks</span></div>
+    <div class="prow"><span class="rank">4</span><span class="pname">Human-readable warehouse origin</span><span class="ppage">PDP</span><span class="pdur">2 wks</span></div>
+    <div class="prow"><span class="rank">5</span><span class="pname">“View Product” CTA</span><span class="ppage">Search</span><span class="pdur">1 mo</span><span class="pnote">Prioritise-first search test.</span></div>
+    <div class="prow"><span class="rank">6</span><span class="pname">Set shipping-cost expectations</span><span class="ppage">Cart</span><span class="pdur">1 mo</span><span class="pnote">Checkout priority — starts once the live cart-USP test concludes.</span></div>
+    <div class="ptier">P3 · September</div>
+    <div class="prow"><span class="rank">7</span><span class="pname">VAT benefit on sign-up screen</span><span class="ppage">Homepage</span><span class="pdur">2 wks</span></div>
+    <div class="prow"><span class="rank">8</span><span class="pname">Original OEM badge</span><span class="ppage">PDP</span><span class="pdur">2 wks</span><span class="pnote">After the OEM-tag feasibility check (Anca).</span></div>
+    <div class="prow"><span class="rank">9</span><span class="pname">In-stock filter</span><span class="ppage">Search</span><span class="pdur">1 mo</span><span class="pnote">After the stock-data feasibility check (Anca).</span></div>
+    <div class="prow"><span class="rank">10</span><span class="pname">Recently viewed below Add to Cart</span><span class="ppage">PDP</span><span class="pdur">2 wks</span></div>
+    <div class="prow"><span class="rank">11</span><span class="pname">VAT guidance repositioned</span><span class="ppage">Cart</span><span class="pdur">1 mo</span></div>
+    <div class="ptier">P4 · Later / next quarter (Search &amp; Cart bottleneck)</div>
+    <div class="prow"><span class="rank">·</span><span class="pname">Warehouse-scoped stock labels</span><span class="ppage">PDP</span><span class="pdur">2 wks</span></div>
+    <div class="prow"><span class="rank">·</span><span class="pname">OEM badge · Column order · Mobile layout</span><span class="ppage">Search</span><span class="pdur">1 mo ea.</span></div>
+    <div class="prow"><span class="rank">·</span><span class="pname">Per-line stock + origin · Brand logo</span><span class="ppage">Cart</span><span class="pdur">1 mo ea.</span></div>
+    <div class="ptier" style="color:#8a5b12;">On hold · revisit</div>
+    <div class="prow"><span class="rank">·</span><span class="pname">USP block below Add to Cart</span><span class="ppage">PDP</span><span class="pdur">—</span><span class="pnote">Pending cart-USP results + Mida tracking fix.</span></div>
+    <div class="prow"><span class="rank">·</span><span class="pname">Delivery estimate</span><span class="ppage">PDP + Cart</span><span class="pdur">—</span><span class="pnote">Delivery-promise risk — pending Tina’s internal check.</span></div>
+  </div>
+
+  <div class="gantt"><div class="inner">
+    <div class="ghead"><div class="glabel"></div><div class="wks">
+      <span>Jul 27</span><span>Aug 3</span><span>Aug 10</span><span>Aug 17</span><span>Aug 24</span><span>Aug 31</span><span>Sep 7</span><span>Sep 14</span><span>Sep 21</span><span>Sep 28</span></div></div>
+
+    <div class="glane">Homepage</div>
+    <div class="grow"><div class="glabel">Simplify search bar</div><div class="gtrack"><div class="gbar" style="left:0%;width:20%;background:#3b82f6;">2 wks</div></div></div>
+    <div class="grow"><div class="glabel">Header: brands → nav</div><div class="gtrack"><div class="gbar" style="left:20%;width:20%;background:#3b82f6;">2 wks</div></div></div>
+    <div class="grow"><div class="glabel">VAT on sign-up</div><div class="gtrack"><div class="gbar" style="left:40%;width:20%;background:#3b82f6;">2 wks</div></div></div>
+
+    <div class="glane">Product page</div>
+    <div class="grow"><div class="glabel">VAT next to price</div><div class="gtrack"><div class="gbar" style="left:0%;width:20%;background:#0f2a5c;">2 wks</div></div></div>
+    <div class="grow"><div class="glabel">Warehouse origin</div><div class="gtrack"><div class="gbar" style="left:20%;width:20%;background:#0f2a5c;">2 wks</div></div></div>
+    <div class="grow"><div class="glabel">OEM badge</div><div class="gtrack"><div class="gbar" style="left:40%;width:20%;background:#0f2a5c;">2 wks</div></div></div>
+    <div class="grow"><div class="glabel">Recently viewed</div><div class="gtrack"><div class="gbar" style="left:60%;width:20%;background:#0f2a5c;">2 wks</div></div></div>
+    <div class="grow"><div class="glabel">Warehouse-scoped stock</div><div class="gtrack"><div class="gbar" style="left:80%;width:20%;background:#0f2a5c;">2 wks</div></div></div>
+
+    <div class="glane">Search results</div>
+    <div class="grow"><div class="glabel">“View Product” CTA</div><div class="gtrack"><div class="gbar" style="left:0%;width:40%;background:#6f5bd0;">1 month</div></div></div>
+    <div class="grow"><div class="glabel">In-stock filter</div><div class="gtrack"><div class="gbar" style="left:40%;width:40%;background:#6f5bd0;">1 month</div></div></div>
+    <div class="grow"><div class="glabel">OEM badge</div><div class="gtrack"><div class="gbar" style="left:80%;width:20%;background:#6f5bd0;">1 mo →</div></div></div>
+
+    <div class="glane">Cart</div>
+    <div class="grow"><div class="glabel">Cart USP (live)</div><div class="gtrack"><div class="gbar" style="left:0%;width:40%;background:#9aa4b0;">live · investigating</div></div></div>
+    <div class="grow"><div class="glabel">Shipping-cost expectations</div><div class="gtrack"><div class="gbar" style="left:40%;width:40%;background:#e8731c;">1 month</div></div></div>
+    <div class="grow"><div class="glabel">VAT guidance</div><div class="gtrack"><div class="gbar" style="left:80%;width:20%;background:#e8731c;">1 mo →</div></div></div>
+  </div></div>
+  <p style="font-size:11px;color:var(--muted);margin-top:8px;">“→” = extends into next quarter. The header test affects all pages, so it needs a clear QA window. Later-funnel calls need the full run length before deciding win/lose.</p>
+
+</div>
+</body>
+</html>
