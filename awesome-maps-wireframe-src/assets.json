@@ -1,0 +1,22 @@
+{
+  "hero": {"url":"https://awesome-maps.com/cdn/shop/files/Our_Map_Hero_low_27e284ac-0759-4d7d-8068-134841711820_500x.jpg?v=1640574594","alt":"Awesome Maps illustrated adventure collection","file":"hero.jpg"},
+  "logo": {"url":"https://awesome-maps.com/cdn/shop/files/awsm-logo_120x.png?v=1613513619","alt":"Awesome Maps","file":"logo.png"},
+  "pressConde": {"url":"https://awesome-maps.com/cdn/shop/files/Conde_Nast_traveler_medium.webp?v=1661768175","alt":"Condé Nast Traveler","file":"press-conde.webp"},
+  "pressLonely": {"url":"https://awesome-maps.com/cdn/shop/files/Lonely_Planet_b83a3c1f-5802-4501-b464-9123ea8684c3_medium.webp?v=1690553267","alt":"Lonely Planet","file":"press-lonely.webp"},
+  "diveTowel": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/2.Artboard1copy_1.5x_955d38bc-d45d-496b-bb97-2cecce153f56.webp?v=1756743284&width=600","alt":"Dive Map towel held open on a beach","file":"dive-towel.webp"},
+  "bucketTowel": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/2.Artboard1copy_1.5x_91ccb22c-2feb-4c83-bae4-47da96dc3fb1.webp?v=1726779726&width=480","alt":"Bucketlist Map towel — official product photograph","file":"bucket-towel.webp"},
+  "surfTowel": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/2.Artboard1copy_1.5x_e006fe62-db27-48df-a253-baca451ccafa.webp?v=1726780311&width=480","alt":"Surftrip Map towel — official product photograph","file":"surf-towel.webp"},
+  "hikeTowel": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/2.Artboard1copy_1.5x_9fadb081-7288-4844-89d2-ad91bbd1f7de.webp?v=1756232318&width=480","alt":"Hiking Map towel — official product photograph","file":"hike-towel.webp"},
+  "divePoster": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy35_1.5x_3683214c-e494-4977-bed0-ed44fd246ed2.webp?v=1726780800&width=480","alt":"Dive Map poster unrolled on a wooden surface","file":"dive-poster.webp"},
+  "bucketPoster": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy35_1.5x_33e1ac35-da5b-4f10-bed8-61659b7309f4.webp?v=1726779725&width=480","alt":"Bucketlist Map poster — official product photograph","file":"bucket-poster.webp"},
+  "diveCanvas": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy103_1.5x_ec9eae10-ffbb-4fb7-a37f-58ea0c462b04.webp?v=1726780800&width=160","alt":"Dive Map stretched canvas","file":"dive-canvas.webp"},
+  "diveFramed": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy69_1.5x_7035ffc4-0e9b-4083-908e-565400a7abac.webp?v=1726780800&width=160","alt":"Dive Map framed poster","file":"dive-framed.webp"},
+  "diveWood": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy137_1.5x_fac80975-b310-4d51-95bf-2c41c268b2a0.webp?v=1726780801&width=160","alt":"Dive Map wood print","file":"dive-wood.webp"},
+  "worldBottle": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy17_1.5x_892d7a75-95f4-4ffd-b91c-ada397cd4cd7.webp?v=1762368449&width=480","alt":"World Adventure Bottle and destination stickers","file":"world-bottle.webp"},
+  "diveBottle": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy34_1.5x_58734aec-7922-4788-b7aa-7c837e4bb87f.webp?v=1762368594&width=480","alt":"Dive Adventure Bottle and dive-site stickers","file":"dive-bottle.webp"},
+  "diveDetail": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy5_1.5x_9e48993d-f198-4a66-89b7-be27ace02e39.webp?v=1726780800&width=600","alt":"Official Dive Map gallery: planning a trip beside the illustrated map","file":"dive-detail.webp"},
+  "diveClose": {"url":"https://cdn.shopify.com/s/files/1/2692/2300/files/Artboard1copy6_1.5x_a3fe2e31-352c-42ad-bdb1-204a8e27f526.webp?v=1726780800&width=480","alt":"Official Dive Map gallery: illustrated Caribbean destinations","file":"dive-close.webp"},
+  "font400": {"url":"https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrFJA.ttf","file":"poppins-400.ttf","weight":400},
+  "font600": {"url":"https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6V1s.ttf","file":"poppins-600.ttf","weight":600},
+  "font700": {"url":"https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7V1s.ttf","file":"poppins-700.ttf","weight":700}
+}
